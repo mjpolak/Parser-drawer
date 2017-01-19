@@ -1,0 +1,10 @@
+.border {
+    border:5px solid black;
+}
+
+
+.done-true {
+    text-decoration: line-through;
+    color: grey;
+}
+
