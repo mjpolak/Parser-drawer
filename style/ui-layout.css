@@ -69,7 +69,7 @@
   cursor: col-resize;
   -webkit-flex-direction: column;
   flex-direction: column;
-  background: linear-gradient(to right, #fff 0%, #eee 100%);
+  background-color: #EEE; /*linear-gradient(to right, #fff 0%, #eee 100%);*/
   overflow-x: hidden;
 }
 

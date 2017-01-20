@@ -1,6 +1,14 @@
 <!doctype html>
 <html ng-app="todoApp">
 <head>
+
+    <title>Parser drawer</title>
+
+    <script type="text/javascript">
+        mxBasePath = 'mxgraph/javascript/src';
+    </script>
+    <script type="text/javascript" src="mxgraph/javascript/src/js/mxClient.js"></script>
+
     <script src="lib/angular.min.js"></script>
     <script src="lib/ui-bootstrap-tpls-2.4.0.min.js"></script>
     <script src="lib/angular-animate.min.js"></script>
@@ -12,89 +20,27 @@
     <link rel="stylesheet" href="style/global.css">
     <link rel="stylesheet" href="style/ui-layout.css">
 </head>
-<body>
-    <!--
-    <h2>Todo</h2>
-    <div ng-controller="TodoListController as todoList">
-        <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
-        [ <a href="" ng-click="todoList.archive()">archive</a> ]
-        <ul class="unstyled">
-            <li ng-repeat="todo in todoList.todos">
-                <label class="checkbox">
-                    <button type="button" class="btn btn-primary" ng-model="todo.done" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-                        Single Toggle
-                    </button>
-                    <span class="done-{{todo.done}}">{{todo.text}}</span>
-                </label>
-            </li>
-        </ul>
-        <form ng-submit="todoList.addTodo()">
-            <input type="text" ng-model="todoList.todoText" size="30"
-                   placeholder="add new todo here">
-            <input class="btn-primary" type="submit" value="add">
-        </form>
-        <div class="btn-group" uib-dropdown is-open="status.isopen">
-            <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-                Button dropdown <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                <li role="menuitem"><a href="#">Action</a></li>
-                <li role="menuitem"><a href="#">Another action</a></li>
-                <li role="menuitem"><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li role="menuitem"><a href="#">Separated link</a></li>
-            </ul>
-        </div>
-
-
-
-        <div ui-layout-container ui-layout="{ flow : 'row' }">
-            <div ng-controller="TabsDemoCtrl">
-
-                <uib-tabset active="active">
-                    <uib-tab index="0" heading="Static title">Static content</uib-tab>
-                    <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}" disable="tab.disabled">
-                        {{tab.content}}
-                    </uib-tab>
-                    <uib-tab index="3" select="alertMe()">
-                        <uib-tab-heading>
-                            <i class="glyphicon glyphicon-bell"></i> Alert!
-                        </uib-tab-heading>
-                        I've got an HTML heading, and a select callback. Pretty cool!
-                    </uib-tab>
-                </uib-tabset>
-            </div>
-            <div ui-layout-container class="container">
-                <div class="row">
-                    <div class="col">
-                        1 of 2
-                    </div>
-                    <div class="col">
-                        1 of 2
+<body ng-controller="BodyController">
+       
+    
+    <div ui-layout>
+        <div ui-layout-container>
+            <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:5}">
+                <div ui-layout-container="central">
+                    <div ui-layout>
+                        <div ui-layout-container>
+                            <div ui-layout="{flow : 'row',disableToggle:true,dividerSize:5}">
+                                <div ui-layout-container="central"><div id="graph_container"></div></div>
+                                <div ui-layout-container size="20%">BC</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        1 of 3
-                    </div>
-                    <div class="col">
-                        1 of 3
-                    </div>
-                    <div class="col">
-                        1 of 3
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <div ui-layout>
-            <div ui-layout-container>
-                <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:5}">
-                    <div ui-layout-container class=" html-back">A</div>
-                    <div ui-layout-container class=" js-back">BC</div>
-                    <div ui-layout-container class=" css-back">C</div>
-                </div>
+                <div ui-layout-container size="20%">BC</div>
             </div>
         </div>
+    </div>
+    <div id="toolbox">test</div> 
 </body>
 </html>
 

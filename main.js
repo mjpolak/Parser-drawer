@@ -1,46 +1,57 @@
 
 
-angular.module('todoApp', ['ui.bootstrap','ui.layout'])
-  .controller('TodoListController', function () {
-      var todoList = this;
-      todoList.todos = [
-        { text: 'learn angular', done: true },
-        { text: 'build an angular app', done: false }];
+angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
+  .controller('BodyController', function ($scope) {
+      var container = document.getElementById('graph_container');
+      // Checks if the browser is supported
+      if (!mxClient.isBrowserSupported()) {
+          // Displays an error message if the browser is not supported.
+          mxUtils.error('Browser is not supported!', 200, false);
+      }
+      else {
 
-      todoList.addTodo = function () {
-          todoList.todos.push({ text: todoList.todoText, done: false });
-          todoList.todoText = '';
-      };
+          // Creates the graph inside the given container
+          var graph = new mxGraph(container);
 
-      todoList.remaining = function () {
-          var count = 0;
-          angular.forEach(todoList.todos, function (todo) {
-              count += todo.done ? 0 : 1;
-          });
-          return count;
-      };
+          // Enables rubberband selection
+          //new mxRubberband(graph);
 
-      todoList.archive = function () {
-          var oldTodos = todoList.todos;
-          todoList.todos = [];
-          angular.forEach(oldTodos, function (todo) {
-              if (!todo.done) todoList.todos.push(todo);
-          });
-      };
-  }).controller('TabsDemoCtrl', function ($scope, $window) {
-      $scope.tabs = [
-        { title: 'Dynamic Title 1', content: 'Dynamic content 1' },
-        { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true }
-      ];
+          // Gets the default parent for inserting new cells. This
+          // is normally the first child of the root (ie. layer 0).
+          var parent = graph.getDefaultParent();
 
-      $scope.alertMe = function () {
-          setTimeout(function () {
-              $window.alert('You\'ve selected the alert tab!');
-          });
-      };
+          // Settings for edges
 
-      $scope.model = {
-          name: 'Tabs'
-      };
+          // Adds cells to the model in a single step
+
+          var edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
+          console.log(mxConstants.STYLE_EDGE)
+          //edgeStyle[mxConstants.STYLE_EDGE] = 'Loop';
+          //edgeStyle[mxConstants.STYLE_CURVED] = '1';
+          
+
+          graph.getModel().beginUpdate();
+          try {
+              var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
+              var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+              var e1 = graph.insertEdge(parent, null, '', v1, v2);
+              var e2 = graph.insertEdge(parent, null, '', v1, v1, mxConstants.STYLE_CURVED+'=1;'+mxConstants.STYLE_EDGE+'=Loop');
+          }
+          finally {
+              // Updates the display
+              graph.getModel().endUpdate();
+          }
+          var toolbox = document.getElementById('toolbox');
+
+          
+          wnd = new mxWindow('Test', toolbox, (0.8*container.clientWidth) - 200, 50, 200, null, true, true);
+          wnd.setMaximizable(false);
+          wnd.setScrollable(false);
+          wnd.setResizable(false);
+          wnd.setMinimizable(false);
+          wnd.setVisible(true);
+
+          console.log(v1);
+      }
   });
 
