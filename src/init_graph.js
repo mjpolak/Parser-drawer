@@ -1,6 +1,10 @@
 var container = document.getElementById('graph_container');
 var graph = new mxGraph(container);
 
+graph.setCellsEditable(false);
+
+graph.setCellsResizable( false);
+
 function StartShape()
 {
     mxDoubleEllipse.call(this);
@@ -40,3 +44,4 @@ defaultStyle[mxConstants.STYLE_SHADOW] = true;
 defaultStyle[mxConstants.STYLE_ARCSIZE] = 20;
 defaultStyle[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
 defaultStyle[mxConstants.STYLE_STROKECOLOR] ='#000000';
+defaultStyle[mxConstants.STYLE_FONTCOLOR] ='#000000';

@@ -24,15 +24,28 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
           // Adds cells to the model in a single step
 
           var edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
-          console.log(mxConstants.STYLE_EDGE)
+
+        var keyHandler = new mxKeyHandler(graph);
+        keyHandler.bindKey(46, function(evt)
+        {
+            console.log(graph.cellsEditable);
+        });
           //edgeStyle[mxConstants.STYLE_EDGE] = 'Loop';
           //edgeStyle[mxConstants.STYLE_CURVED] = '1';
           
 
+        var test = {
+            toString: function(){
+                return "work in progress";
+            }
+        }
+
+
           graph.getModel().beginUpdate();
           try {
-              var v1 = graph.insertVertex(parent, null, '', 200, 20, 30, 30,'start');
-              var v2 = graph.insertVertex(parent, null, '', 200, 200, 30, 30,'end');
+
+              var v1 = graph.insertVertex(parent, null, test, 200, 20, 30, 30,'start');
+              var v2 = graph.insertVertex(parent, null, test, 200, 200, 30, 30,'end');
 
               var v3 = graph.insertVertex(parent, null, 'Any', 200, 100, 100, 50);
             //   var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
