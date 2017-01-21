@@ -1,8 +1,7 @@
 
-
 angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
   .controller('BodyController', function ($scope) {
-      var container = document.getElementById('graph_container');
+
       // Checks if the browser is supported
       if (!mxClient.isBrowserSupported()) {
           // Displays an error message if the browser is not supported.
@@ -11,7 +10,7 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
       else {
 
           // Creates the graph inside the given container
-          var graph = new mxGraph(container);
+          
 
           // Enables rubberband selection
           //new mxRubberband(graph);
@@ -32,10 +31,13 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
 
           graph.getModel().beginUpdate();
           try {
-              var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-              var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-              var e1 = graph.insertEdge(parent, null, '', v1, v2);
-              var e2 = graph.insertEdge(parent, null, '', v1, v1, mxConstants.STYLE_CURVED+'=1;'+mxConstants.STYLE_EDGE+'=Loop');
+              var v1 = graph.insertVertex(parent, null, '', 200, 20, 30, 30,'start');
+              var v2 = graph.insertVertex(parent, null, '', 200, 200, 30, 30,'end');
+
+              var v3 = graph.insertVertex(parent, null, 'Any', 200, 100, 100, 50);
+            //   var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+            //   var e1 = graph.insertEdge(parent, null, '', v1, v2);
+            //   var e2 = graph.insertEdge(parent, null, '', v1, v1, mxConstants.STYLE_CURVED+'=1;'+mxConstants.STYLE_EDGE+'=Loop');
           }
           finally {
               // Updates the display
