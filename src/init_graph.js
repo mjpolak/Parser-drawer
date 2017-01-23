@@ -7,25 +7,40 @@ editor.setGraphContainer(container);
 
 
 mxEvent.disableContextMenu(container);
+graph.setDropEnabled(true);
 graph.setCellsEditable(false);
 graph.setConnectable(true);
 graph.setCellsResizable(true);
 graph.setAllowLoops(true);
 
+
+mxGraph.prototype.createGroupCell = function(cells) {
+    var group = new mxCell('', null, 'group'); //  + '=0');
+    group.setVertex(true);
+    group.setConnectable(false);
+
+    return group;
+};
+
+
 mxRubberband.prototype.oldMouseDown = mxRubberband.prototype.mouseDown;
 mxRubberband.prototype.oldMouseUp = mxRubberband.prototype.mouseUp;
 
-mxRubberband.prototype.mouseDown = function(sender,me)
-{
-    if(me.evt.which == 1)
+mxRubberband.prototype.mouseDown = function(sender, me) {
+    if (me.evt.which == 1)
         this.oldMouseDown(sender, me);
 }
-mxRubberband.prototype.mouseUp = function(sender,me)
-{
+mxRubberband.prototype.mouseUp = function(sender, me) {
     if (me.evt.which == 1)
         this.oldMouseUp(sender, me);
 }
 
+mxGraph.prototype.isValidDropTarget = function(cell, cells, evt) {
+    return cell != null && ((this.isSplitEnabled() &&
+        this.isSplitTarget(cell, cells, evt)) || (!this.model.isEdge(cell) &&
+        (this.isSwimlane(cell) || ((this.model.getChildCount(cell) > 0 || (cell.children != null && cell.children.length == 0)) &&
+            !this.isCellCollapsed(cell)))));
+}
 
 
 var ruberBand = new mxRubberband(graph);
@@ -107,3 +122,10 @@ defaultStyle[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
 defaultStyle[mxConstants.STYLE_STROKECOLOR] = '#000000';
 defaultStyle[mxConstants.STYLE_FONTCOLOR] = '#000000';
 defaultStyle[mxConstants.STYLE_RESIZABLE] = '1';
+
+var group = angular.copy(defaultStyle);
+defaultStyle[mxConstants.STYLE_ROUNDED] = false;
+defaultStyle[mxConstants.STYLE_SHADOW] = false;
+defaultStyle[mxConstants.STYLE_FOLDABLE] = '0';
+defaultStyle[mxConstants.STYLE_FILL_OPACITY] = 0;
+graph.getStylesheet().putCellStyle('group', defaultStyle);
