@@ -1,25 +1,35 @@
 angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
-    .controller('BodyController', function ($scope) {
-        $scope.zoomIn = function () {
+    .controller('BodyController', function($scope) {
+        $scope.zoomIn = function() {
             graph.zoomIn();
         }
 
-        $scope.zoomOut = function () {
+        $scope.zoomOut = function() {
 
             graph.zoomOut();
         }
 
-        $scope.focusAll = function () {
+        $scope.focusAll = function() {
             graph.fit();
         }
 
-        $scope.undo = function () {
+        $scope.undo = function() {
             //edtitor.undo();
             editor.execute('undo');
         }
-        $scope.redo = function () {
+        $scope.redo = function() {
             //edtitor.undo();
             editor.execute('redo');
+        }
+
+        $scope.group = function() {
+            //edtitor.undo();
+            editor.execute('group');
+        }
+
+        $scope.ungroup = function() {
+            //edtitor.undo();
+            editor.execute('ungroup');
         }
 
         // Checks if the browser is supported
@@ -49,22 +59,22 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
             edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.OrthConnector;
             edgeStyle[mxConstants.STYLE_ROUNDED] = true;
             edgeStyle[mxConstants.STYLE_STROKECOLOR] = '#000';
-            
+
 
             //graph.addListener(mxEvent.CLICK, function (sender, evt) {
             //    //console.log(evt);
             //});
 
             var keyHandler = new mxKeyHandler(graph);
-            keyHandler.bindKey(46, function (evt) {
+            keyHandler.bindKey(46, function(evt) {
                 //console.log(graph.cellsEditable);
                 if (graph.isEnabled()) {
                     graph.removeCells();
                 }
             });
 
-            keyHandler.bindKey(79, function (evt) {
-                console.log(graph.getEdgeValidationError)
+            keyHandler.bindKey(79, function(evt) {
+                console.log(graph.getSelectionCell().value)
             });
             //edgeStyle[mxConstants.STYLE_EDGE] = 'Loop';
             //edgeStyle[mxConstants.STYLE_CURVED] = '1';
@@ -73,7 +83,7 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
             var start = {
                 source: true,
                 target: false,
-                toString: function () {
+                toString: function() {
                     return "";
                 }
             }
@@ -81,7 +91,7 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
             var koniec = {
                 source: false,
                 target: true,
-                toString: function () {
+                toString: function() {
                     return "";
                 }
             }
@@ -89,11 +99,18 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
             var obiekt = {
                 source: true,
                 target: true,
-                toString: function () {
+                toString: function() {
                     return "Obiekt";
                 }
             }
 
+            mxEvent.addMouseWheelListener(function(evt, up) {
+                if (up) {
+                    graph.zoomIn();
+                } else {
+                    graph.zoomOut();
+                }
+            });
 
             graph.getModel().beginUpdate();
             try {
