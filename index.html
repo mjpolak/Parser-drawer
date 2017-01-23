@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html ng-app="todoApp">
 <head>
 <meta charset="utf-8" /> 
@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="style/ui-layout.css">
 </head>
 <body ng-controller="BodyController">
-       
     
+   
     <div ui-layout>
         <div ui-layout-container>
             <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:5}">
@@ -29,8 +29,21 @@
                     <div ui-layout>
                         <div ui-layout-container>
                             <div ui-layout="{flow : 'row',disableToggle:true,dividerSize:5}">
-                                <div ui-layout-container="central"><div id="graph_container"></div></div>
-                                <div ui-layout-container size="20%">BC</div>
+                                <div ui-layout-container="central">
+                                    <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:0}">
+                                        <div ui-layout-container size="50px" style="background-color:gray">
+                                            <button ng-click="zoomIn()" href="">+</button>
+                                            <button ng-click="zoomOut()" href="">-</button>
+                                            <button ng-click="focusAll()" href="">All</button>
+                                            <button ng-click="undo()" href="">Undo</button>
+                                            <button ng-click="redo()" href="">Redo</button>
+                                        </div>
+                                        <div ui-layout-container="central">
+                                            <div id="graph_container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div ui-layout-container size="20%">ABC</div>
                             </div>
                         </div>
                     </div>
@@ -39,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div id="toolbox">test</div> 
+
     <script src="src/init_graph.js"></script>
     <script src="main.js"></script>
 </body>

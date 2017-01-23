@@ -1,5 +1,26 @@
 angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
-    .controller('BodyController', function($scope) {
+    .controller('BodyController', function ($scope) {
+        $scope.zoomIn = function () {
+            graph.zoomIn();
+        }
+
+        $scope.zoomOut = function () {
+
+            graph.zoomOut();
+        }
+
+        $scope.focusAll = function () {
+            graph.fit();
+        }
+
+        $scope.undo = function () {
+            //edtitor.undo();
+            editor.execute('undo');
+        }
+        $scope.redo = function () {
+            //edtitor.undo();
+            editor.execute('redo');
+        }
 
         // Checks if the browser is supported
         if (!mxClient.isBrowserSupported()) {
@@ -17,21 +38,32 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
             // is normally the first child of the root (ie. layer 0).
             var parent = graph.getDefaultParent();
 
+
             // Settings for edges
 
             // Adds cells to the model in a single step
 
             var edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
 
+
+            edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.OrthConnector;
+            edgeStyle[mxConstants.STYLE_ROUNDED] = true;
+            edgeStyle[mxConstants.STYLE_STROKECOLOR] = '#000';
+            
+
+            //graph.addListener(mxEvent.CLICK, function (sender, evt) {
+            //    //console.log(evt);
+            //});
+
             var keyHandler = new mxKeyHandler(graph);
-            keyHandler.bindKey(46, function(evt) {
+            keyHandler.bindKey(46, function (evt) {
                 //console.log(graph.cellsEditable);
                 if (graph.isEnabled()) {
                     graph.removeCells();
                 }
             });
 
-            keyHandler.bindKey(79, function(evt) {
+            keyHandler.bindKey(79, function (evt) {
                 console.log(graph.getEdgeValidationError)
             });
             //edgeStyle[mxConstants.STYLE_EDGE] = 'Loop';
@@ -41,7 +73,7 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
             var start = {
                 source: true,
                 target: false,
-                toString: function() {
+                toString: function () {
                     return "";
                 }
             }
@@ -49,7 +81,7 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
             var koniec = {
                 source: false,
                 target: true,
-                toString: function() {
+                toString: function () {
                     return "";
                 }
             }
@@ -57,7 +89,7 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
             var obiekt = {
                 source: true,
                 target: true,
-                toString: function() {
+                toString: function () {
                     return "Obiekt";
                 }
             }
@@ -68,7 +100,10 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
 
                 var v1 = graph.insertVertex(parent, null, start, 200, 20, 30, 30, 'start');
                 var v2 = graph.insertVertex(parent, null, koniec, 200, 200, 30, 30, 'end');
-                var v3 = graph.insertVertex(parent, null, obiekt, 200, 100, 100, 50);
+                var v3 = graph.insertVertex(parent, null, obiekt, 400, 100, 100, 50);
+
+                graph.insertEdge(parent, null, '', v1, v3);
+                graph.insertEdge(parent, null, '', v3, v2);
                 //   var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
                 //   var e1 = graph.insertEdge(parent, null, '', v1, v2);
                 //   var e2 = graph.insertEdge(parent, null, '', v1, v1, mxConstants.STYLE_CURVED+'=1;'+mxConstants.STYLE_EDGE+'=Loop');
@@ -76,16 +111,15 @@ angular.module('todoApp', ['ui.bootstrap', 'ui.layout'])
                 // Updates the display
                 graph.getModel().endUpdate();
             }
-            var toolbox = document.getElementById('toolbox');
+            //var toolbox = document.getElementById('toolbox');
 
 
-            wnd = new mxWindow('Test', toolbox, (0.8 * container.clientWidth) - 200, 50, 200, null, true, true);
-            wnd.setMaximizable(false);
-            wnd.setScrollable(false);
-            wnd.setResizable(false);
-            wnd.setMinimizable(false);
-            wnd.setVisible(true);
+            //wnd = new mxWindow('Test', toolbox, (0.8 * container.clientWidth) - 200, 50, 200, null, true, true);
+            //wnd.setMaximizable(false);
+            //wnd.setScrollable(false);
+            //wnd.setResizable(false);
+            //wnd.setMinimizable(false);
+            //wnd.setVisible(true);
 
-            console.log(v1);
         }
     });

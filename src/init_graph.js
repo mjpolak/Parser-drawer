@@ -1,12 +1,35 @@
 var container = document.getElementById('graph_container');
-var graph = new mxGraph(container);
 
+var editor = new mxEditor();
+var graph = editor.graph;
+var model = graph.getModel();
+editor.setGraphContainer(container);
+
+
+mxEvent.disableContextMenu(container);
 graph.setCellsEditable(false);
 graph.setConnectable(true);
-graph.setCellsResizable(false);
+graph.setCellsResizable(true);
 graph.setAllowLoops(true);
-new mxRubberband(graph);
 
+mxRubberband.prototype.oldMouseDown = mxRubberband.prototype.mouseDown;
+mxRubberband.prototype.oldMouseUp = mxRubberband.prototype.mouseUp;
+
+mxRubberband.prototype.mouseDown = function(sender,me)
+{
+    if(me.evt.which == 1)
+        this.oldMouseDown(sender, me);
+}
+mxRubberband.prototype.mouseUp = function(sender,me)
+{
+    if (me.evt.which == 1)
+        this.oldMouseUp(sender, me);
+}
+
+
+
+var ruberBand = new mxRubberband(graph);
+var paning = new mxPanningHandler(graph);
 mxGraph.prototype.isValidEnding = function(cell) {
     return (cell == null && this.allowDanglingEdges) ||
         (cell != null && (!this.model.isEdge(cell) ||
@@ -53,6 +76,8 @@ startStyle[mxConstants.STYLE_SHAPE] = 'shape_start';
 startStyle[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
 startStyle[mxConstants.STYLE_STROKECOLOR] = '#000000';
 startStyle[mxConstants.STYLE_STROKEWIDTH] = 2;
+startStyle[mxConstants.STYLE_RESIZABLE] = '0';
+
 
 graph.getStylesheet().putCellStyle('start', startStyle);
 
@@ -67,6 +92,7 @@ endStyle[mxConstants.STYLE_SHAPE] = 'shape_end';
 endStyle[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
 endStyle[mxConstants.STYLE_STROKECOLOR] = '#000000';
 endStyle[mxConstants.STYLE_STROKEWIDTH] = 4;
+endStyle[mxConstants.STYLE_RESIZABLE] = '0';
 
 graph.getStylesheet().putCellStyle('end', endStyle);
 
@@ -80,3 +106,4 @@ defaultStyle[mxConstants.STYLE_ARCSIZE] = 20;
 defaultStyle[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
 defaultStyle[mxConstants.STYLE_STROKECOLOR] = '#000000';
 defaultStyle[mxConstants.STYLE_FONTCOLOR] = '#000000';
+defaultStyle[mxConstants.STYLE_RESIZABLE] = '1';
