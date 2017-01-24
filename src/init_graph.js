@@ -11,7 +11,7 @@ graph.setDropEnabled(true);
 graph.setCellsEditable(false);
 graph.setConnectable(true);
 graph.setCellsResizable(true);
-graph.setAllowLoops(true);
+graph.setAllowLoops(false);
 
 
 mxGraph.prototype.createGroupCell = function(cells) {
@@ -20,6 +20,25 @@ mxGraph.prototype.createGroupCell = function(cells) {
     group.setConnectable(false);
 
     return group;
+};
+
+mxGraph.prototype.convertValueToString = function(cell)
+{
+	var value = this.model.getValue(cell);
+	
+	if (value != null)
+	{
+		if (value.nodeName != null)
+		{
+			return value.nodeName;
+		}
+		else if (typeof(value.toString) == 'function')
+		{
+			return value.toString();
+		}
+	}
+	
+	return '';
 };
 
 
@@ -88,10 +107,12 @@ mxUtils.extend(StartShape, mxDoubleEllipse);
 mxCellRenderer.prototype.defaultShapes['shape_start'] = StartShape;
 var startStyle = new Object();
 startStyle[mxConstants.STYLE_SHAPE] = 'shape_start';
-startStyle[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
+startStyle[mxConstants.STYLE_FILLCOLOR] = '#00FF00';
 startStyle[mxConstants.STYLE_STROKECOLOR] = '#000000';
 startStyle[mxConstants.STYLE_STROKEWIDTH] = 2;
 startStyle[mxConstants.STYLE_RESIZABLE] = '0';
+startStyle[mxConstants.STYLE_NOLABEL] = 'noLabel';
+
 
 
 graph.getStylesheet().putCellStyle('start', startStyle);
@@ -104,10 +125,11 @@ mxUtils.extend(EndShape, mxEllipse);
 mxCellRenderer.prototype.defaultShapes['shape_end'] = EndShape;
 var endStyle = new Object();
 endStyle[mxConstants.STYLE_SHAPE] = 'shape_end';
-endStyle[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
+endStyle[mxConstants.STYLE_FILLCOLOR] = '#FF0000';
 endStyle[mxConstants.STYLE_STROKECOLOR] = '#000000';
 endStyle[mxConstants.STYLE_STROKEWIDTH] = 4;
 endStyle[mxConstants.STYLE_RESIZABLE] = '0';
+endStyle[mxConstants.STYLE_NOLABEL] = 'noLabel';
 
 graph.getStylesheet().putCellStyle('end', endStyle);
 
@@ -122,10 +144,11 @@ defaultStyle[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
 defaultStyle[mxConstants.STYLE_STROKECOLOR] = '#000000';
 defaultStyle[mxConstants.STYLE_FONTCOLOR] = '#000000';
 defaultStyle[mxConstants.STYLE_RESIZABLE] = '1';
+defaultStyle[mxConstants.STYLE_FILL_OPACITY] = 100;
 
 var group = angular.copy(defaultStyle);
-defaultStyle[mxConstants.STYLE_ROUNDED] = false;
-defaultStyle[mxConstants.STYLE_SHADOW] = false;
-defaultStyle[mxConstants.STYLE_FOLDABLE] = '0';
-defaultStyle[mxConstants.STYLE_FILL_OPACITY] = 0;
-graph.getStylesheet().putCellStyle('group', defaultStyle);
+group[mxConstants.STYLE_ROUNDED] = false;
+group[mxConstants.STYLE_SHADOW] = false;
+group[mxConstants.STYLE_FOLDABLE] = '0';
+group[mxConstants.STYLE_FILL_OPACITY] = 0;
+graph.getStylesheet().putCellStyle('group', group);

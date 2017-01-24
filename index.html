@@ -10,12 +10,17 @@
     </script>
     <script type="text/javascript" src="mxgraph/javascript/src/js/mxClient.js"></script>
 
+
     <script src="lib/angular.min.js"></script>
+    <script src="src/utils.js"></script>
     <script src="lib/ui-bootstrap-tpls-2.4.0.min.js"></script>
     <script src="lib/angular-animate.min.js"></script>
     <script src="lib/angular-touch.min.js"></script>
     <script src="lib/ui-layout.js"></script>
+    <script src="lib/ngDialog.min.js"></script>
 
+    <link rel="stylesheet" href="style/ngDialog.min.css">
+    <link rel="stylesheet" href="style/ngDialog-theme-default.min.css">
     <link rel="stylesheet" href="style/bootstrap.min.css">
     <link rel="stylesheet" href="style/global.css">
     <link rel="stylesheet" href="style/ui-layout.css">
@@ -41,13 +46,17 @@
                                             <button ng-click="redo()" href="">Redo</button></br>
                                             <button ng-click="group()" href="">Group</button></br>
                                             <button ng-click="ungroup()" href="">Ungroup</button></br>
+                                            <button ng-click="toXML()" href="">to XML</button></br>
+                                            <button ng-click="fromXML()" href="">from XML</button></br>
+                                            <button ng-click="download()" href="">download</button></br>
+                                            <button ng-click="open()" href="">open</button></br>
                                         </div>
                                         <div ui-layout-container="central">
                                             <div id="graph_container"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div ui-layout-container size="10%">ABC</div>
+                                <div ui-layout-container size="10%"><textarea ng-model="xml" style="width:100%;height:99%;padding:0px;margin: 0px"></textarea></pre></div>
                             </div>
                         </div>
                     </div>
