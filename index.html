@@ -4,13 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <title>Parser drawer</title>
-
     <script type="text/javascript">
         mxBasePath = 'mxgraph/javascript/src';
     </script>
     <script type="text/javascript" src="mxgraph/javascript/src/js/mxClient.js"></script>
-
-
     <script src="lib/angular.min.js"></script>
     <script src="src/utils.js"></script>
     <script src="lib/ui-bootstrap-tpls-2.4.0.min.js"></script>
@@ -18,7 +15,19 @@
     <script src="lib/angular-touch.min.js"></script>
     <script src="lib/ui-layout.js"></script>
     <script src="lib/ngDialog.min.js"></script>
+    <script>
+        // window.onbeforeunload = function (e) {
+        //     e = e || window.event;
 
+        //     // For IE and Firefox prior to version 4
+        //     if (e) {
+        //         e.returnValue = 'Sure?';
+        //     }
+
+        //     // For Safari
+        //     return 'Sure?';
+        // };
+    </script>
     <link rel="stylesheet" href="style/ngDialog.min.css">
     <link rel="stylesheet" href="style/ngDialog-theme-default.min.css">
     <link rel="stylesheet" href="style/bootstrap.min.css">
@@ -27,8 +36,6 @@
 </head>
 
 <body ng-controller="BodyController">
-
-
     <div ui-layout>
         <div ui-layout-container>
             <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:5}">
@@ -38,25 +45,25 @@
                             <div ui-layout="{flow : 'row',disableToggle:true,dividerSize:5}">
                                 <div ui-layout-container="central">
                                     <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:0}">
-                                        <div ui-layout-container size="50px" style="background-color:gray">
-                                            <button ng-click="zoomIn()" href="">+</button>
-                                            <button ng-click="zoomOut()" href="">-</button></br>
-                                            <button ng-click="focusAll()" href="">All</button></br>
-                                            <button ng-click="undo()" href="">Undo</button></br>
-                                            <button ng-click="redo()" href="">Redo</button></br>
-                                            <button ng-click="group()" href="">Group</button></br>
-                                            <button ng-click="ungroup()" href="">Ungroup</button></br>
-                                            <button ng-click="toXML()" href="">to XML</button></br>
-                                            <button ng-click="fromXML()" href="">from XML</button></br>
-                                            <button ng-click="download()" href="">download</button></br>
-                                            <button ng-click="open()" href="">open</button></br>
+                                        <div ui-layout-container size="100px" style="background-color:lightgray;text-align: center">
+                                            <button type="button" class="btn btn-info" ng-click="zoomIn()">+</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="zoomOut()">-</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="focusAll()">All</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="undo()">Undo</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="redo()">Redo</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="group()">Group</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="ungroup()">Ungroup</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="download()">Download</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="open()">Open</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="createNew()">createNew</button></br>
                                         </div>
                                         <div ui-layout-container="central">
                                             <div id="graph_container"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div ui-layout-container size="10%"><textarea ng-model="xml" style="width:100%;height:99%;padding:0px;margin: 0px"></textarea></pre></div>
+                                <div ui-layout-container size="10%"><textarea ng-model="xml" style="width:100%;height:99%;padding:0px;margin: 0px"></textarea></pre>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +72,7 @@
             </div>
         </div>
     </div>
-
+    <script src="src/pdFlow.js"></script>
     <script src="src/init_graph.js"></script>
     <script src="main.js"></script>
 </body>

@@ -1,19 +1,19 @@
 
 var pdVertexType = {
-    START:0,
-    END:1,
-    LOOP:2,
-    RECURSION:3,
-    MASK:4
+    START:'start',
+    END:'end',
+    NESTED:'nested',
+    RECURSION:'recursion',
+    MASK:'mask',
+    VARIABLE:'variable'
 }
 
-var pdVertex = function(type)
-{
-    this.Vertexes = [];
-    this.Edges = [];
-}
+var pdSourcesVertex = [
+    pdVertexType.START,
+    pdVertexType.MASK
+];
 
-pdFlow.prototype.Add = function()
-{
-    
-}
+var pdTargetVertex = [
+    pdVertexType.END,
+    pdVertexType.MASK
+]
