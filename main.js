@@ -1,40 +1,40 @@
 angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
-    .controller('BodyController', function ($scope, ngDialog) {
-        $scope.zoomIn = function () {
+    .controller('BodyController', function($scope, ngDialog) {
+        $scope.zoomIn = function() {
             graph.zoomIn();
         }
 
-        $scope.zoomOut = function () {
+        $scope.zoomOut = function() {
 
             graph.zoomOut();
         }
 
-        $scope.focusAll = function () {
+        $scope.focusAll = function() {
             graph.fit();
         }
 
-        $scope.undo = function () {
+        $scope.undo = function() {
             editor.execute('undo');
         }
-        $scope.redo = function () {
+        $scope.redo = function() {
             editor.execute('redo');
         }
 
-        $scope.group = function () {
+        $scope.group = function() {
             editor.execute('group');
         }
 
-        $scope.ungroup = function () {
+        $scope.ungroup = function() {
             editor.execute('ungroup');
         }
 
-        $scope.toXML = function () {
+        $scope.toXML = function() {
             var encoder = new mxCodec();
             var node = encoder.encode(graph.getModel());
             this.xml = mxUtils.getPrettyXml(node);
         }
 
-        $scope.fromXML = function () {
+        $scope.fromXML = function() {
             var doc = mxUtils.parseXml(this.xml);
             var codec = new mxCodec(doc);
             codec.decode(doc.documentElement, graph.getModel());
@@ -53,21 +53,21 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 a.download = filename;
                 document.body.appendChild(a);
                 a.click();
-                setTimeout(function () {
+                setTimeout(function() {
                     document.body.removeChild(a);
                     window.URL.revokeObjectURL(url);
                 }, 0);
             }
         }
 
-        $scope.download = function () {
+        $scope.download = function() {
 
 
             ngDialog.open({
                 template: '<p >File name:</p><input type="text" ng-model="file_name"/> .xml</br><button type="button" class="btn btn-info" ng-click="download()">Download</button></br>',
                 plain: true,
-                controller: ['$scope', function ($scopedx) {
-                    $scopedx.download = function () {
+                controller: ['$scope', function($scopedx) {
+                    $scopedx.download = function() {
                         var encoder = new mxCodec();
                         var node = encoder.encode(graph.getModel());
                         this.xml = mxUtils.getPrettyXml(node);
@@ -78,17 +78,17 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             });
         }
 
-        $scope.open = function () {
+        $scope.open = function() {
 
             ngDialog.open({
                 template: '<p >File name:</p><input type="file" id="file" name="file" enctype="multipart/form-data" />',
                 plain: true,
-                controller: ['$scope', function ($scopedx) {
+                controller: ['$scope', function($scopedx) {
                     function readFile(evt) {
                         var files = evt.target.files;
                         var file = files[0];
                         var reader = new FileReader();
-                        reader.onload = function () {
+                        reader.onload = function() {
                             $scope.xml = this.result;
                             $scope.fromXML();
                             $scopedx.closeThisDialog("true");
@@ -96,18 +96,58 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                         reader.readAsText(file)
                     }
 
-                    $scopedx.$on('ngDialog.opened', function (e, $dialog) {
+                    $scopedx.$on('ngDialog.opened', function(e, $dialog) {
                         document.getElementById('file').addEventListener('change', readFile, false);
                     });
                 }]
             });
         }
-        var listener = graph.addListener(mxEvent.MOUSE_DOWN, function(sender, evt)
-        {
-            alert("ok");
-        });
-        $scope.createNew = function () {
+        $scope.createNew = function() {
+            // var adder = function(sender, evt) {
+            //     var cell = evt.getProperty('cell');
+            //     var event = evt.getProperty('event');
 
+            if (cell == null && event != null) {
+                var obiekt = {
+                    nodeName: 'Nowa maska',
+                    clone: function() {
+                        return angular.copy(this);
+                    }
+                }
+                var parent = graph.getDefaultParent();
+                graph.insertVertex(parent, null, obiekt, event.x, event.y, 30, 30, pdVertexType.MASK);
+            }
+
+            //     graph.removeListener(adder);
+            // }
+            // graph.addListenerOnce(mxEvent.CLICK, adder);
+
+
+            var event = {
+                mouseDown: function(sender, evt) {
+                    var parent;
+                    if (evt.state == null) {
+                        parent = graph.getDefaultParent();
+                    } else
+                    if (evt.state.cell != null && pdContainersVertex.includes(evt.state.cell))
+                        parent = evt.parent;
+
+                    if (parent) {
+                        var obiekt = {
+                            nodeName: 'Nowa maska',
+                            clone: function() {
+                                return angular.copy(this);
+                            }
+                        }
+                        var pt = mxUtils.convertPoint(graph.container, evt.evt.x, evt.evt.y);
+                        graph.insertVertex(parent, null, obiekt, pt.x, pt.y, 120, 30, pdVertexType.MASK);
+                    }
+                    graph.removeMouseListener(event);
+                },
+                mouseMove: function(sender, evt) {},
+                mouseUp: function(sender, evt) {}
+            }
+            graph.addMouseListener(event);
         }
 
         if (!mxClient.isBrowserSupported()) {
@@ -115,40 +155,28 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
         } else {
             var parent = graph.getDefaultParent();
             var keyHandler = new mxKeyHandler(graph);
-            keyHandler.bindKey(46, function (evt) {
+            keyHandler.bindKey(46, function(evt) {
                 if (graph.isEnabled()) {
                     graph.removeCells();
                 }
             });
 
-            keyHandler.bindKey(79, function (evt) {
+            keyHandler.bindKey(79, function(evt) {
                 console.log(graph.getSelectionCell().value)
             });
 
-            var start = {
-                source: true,
-                target: false,
-            }
 
-            var koniec = {
-                source: false,
-                target: true,
-            }
 
             var obiekt = {
-                source: true,
-                target: true,
                 nodeName: 'Obiekt',
-                clone: function () {
+                clone: function() {
                     return angular.copy(this);
                 }
             }
 
             var zmienna = {
-                source: false,
-                target: false,
                 nodeName: 'V',
-                clone: function () {
+                clone: function() {
                     return angular.copy(this);
                 }
             }
@@ -156,8 +184,8 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             graph.getModel().beginUpdate();
             try {
 
-                var v1 = graph.insertVertex(parent, null, start, 200, 20, 30, 30, pdVertexType.START);
-                var v2 = graph.insertVertex(parent, null, koniec, 200, 200, 30, 30, pdVertexType.END);
+                var v1 = graph.insertVertex(parent, null, 'start', 200, 20, 30, 30, pdVertexType.START);
+                var v2 = graph.insertVertex(parent, null, 'koniec', 200, 200, 30, 30, pdVertexType.END);
                 var v3 = graph.insertVertex(parent, null, obiekt, 400, 100, 100, 50, pdVertexType.MASK);
                 var v4 = graph.insertVertex(parent, null, zmienna, 400, 200, 50, 50, pdVertexType.VARIABLE);
 

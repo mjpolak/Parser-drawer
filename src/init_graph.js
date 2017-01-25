@@ -15,19 +15,7 @@ graph.setAllowLoops(false);
 var ruberBand = new mxRubberband(graph);
 var paning = new mxPanningHandler(graph);
 
-var graphHandlerMouseDown = mxGraphHandler.prototype.mouseDown;
-mxGraphHandler.prototype.mouseDown = function(sender, me)
-{
-    alert('ok');
-    graphHandlerMouseDown.apply(this, arguments);
-
-    // if (this.graph.isCellSelected(me.getCell()) && this.graph.getSelectionCount() > 1)
-    // {
-    //     this.delayedSelection = false;
-    // }
-};
-
-mxEvent.addMouseWheelListener(function (evt, up) {
+mxEvent.addMouseWheelListener(function(evt, up) {
     if (up) {
         graph.zoomIn();
     } else {
@@ -35,12 +23,12 @@ mxEvent.addMouseWheelListener(function (evt, up) {
     }
 });
 
-graph.getModel().addListener(mxEvent.CHANGE, function (sender, evt) {
-    var cells = evt.getProperty('edit').changes.map(function (x) {
+graph.getModel().addListener(mxEvent.CHANGE, function(sender, evt) {
+    var cells = evt.getProperty('edit').changes.map(function(x) {
         return x.cell
     });
 
-    var childs = cells.filter(function (x) {
+    var childs = cells.filter(function(x) {
         return x != null && x.isEdge != null
     })
     var distinct = pdArray.getDistinctBy(childs);
@@ -58,7 +46,7 @@ graph.getModel().addListener(mxEvent.CHANGE, function (sender, evt) {
     graph.getModel().endUpdate();
 });
 
-mxGraph.prototype.createGroupCell = function (cells) {
+mxGraph.prototype.createGroupCell = function(cells) {
     var group = new mxCell('', null, 'group'); //  + '=0');
     group.setVertex(true);
     group.setConnectable(false);
@@ -66,13 +54,13 @@ mxGraph.prototype.createGroupCell = function (cells) {
     return group;
 };
 
-mxGraph.prototype.convertValueToString = function (cell) {
+mxGraph.prototype.convertValueToString = function(cell) {
     var value = this.model.getValue(cell);
 
     if (value != null) {
         if (value.nodeName != null) {
             return value.nodeName;
-        } else if (typeof (value.toString) == 'function') {
+        } else if (typeof(value.toString) == 'function') {
             return value.toString();
         }
     }
@@ -84,41 +72,41 @@ mxGraph.prototype.convertValueToString = function (cell) {
 mxRubberband.prototype.oldMouseDown = mxRubberband.prototype.mouseDown;
 mxRubberband.prototype.oldMouseUp = mxRubberband.prototype.mouseUp;
 
-mxRubberband.prototype.mouseDown = function (sender, me) {
+mxRubberband.prototype.mouseDown = function(sender, me) {
     if (me.evt.which == 1)
         this.oldMouseDown(sender, me);
 }
-mxRubberband.prototype.mouseUp = function (sender, me) {
+mxRubberband.prototype.mouseUp = function(sender, me) {
     if (me.evt.which == 1)
         this.oldMouseUp(sender, me);
 }
 
-mxGraph.prototype.isValidDropTarget = function (cell, cells, evt) {
+mxGraph.prototype.isValidDropTarget = function(cell, cells, evt) {
     return cell != null && ((this.isSplitEnabled() &&
         this.isSplitTarget(cell, cells, evt)) || (!this.model.isEdge(cell) &&
         (this.isSwimlane(cell) || ((this.model.getChildCount(cell) > 0 || (cell.children != null && cell.children.length == 0)) &&
             !this.isCellCollapsed(cell)))));
 }
-mxGraph.prototype.isValidEnding = function (cell) {
+mxGraph.prototype.isValidEnding = function(cell) {
     return (cell == null && this.allowDanglingEdges) ||
         (cell != null && (!this.model.isEdge(cell) ||
             this.connectableEdges) && this.isCellConnectable(cell));
 }
 
-mxGraph.prototype.isValidSource = function (cell) {
+mxGraph.prototype.isValidSource = function(cell) {
     // if (cell != null && cell.value && cell.value.source == false)
     if (cell != null && cell.style && !pdSourcesVertex.includes(cell.style))
         return false;
     return this.isValidEnding(cell);
 }
 
-mxGraph.prototype.isValidTarget = function (cell) {
+mxGraph.prototype.isValidTarget = function(cell) {
     if (cell != null && cell.style && !pdTargetVertex.includes(cell.style))
         return false;
     return this.isValidEnding(cell);
 }
 
-graph.validateEdge = function (edge, source, target) {
+graph.validateEdge = function(edge, source, target) {
 
     if (source.value != null && source.value.source == false)
         return 'Cannot be source';
@@ -196,8 +184,12 @@ variable[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE;
 variable[mxConstants.STYLE_ROUNDED] = true;
 variable[mxConstants.STYLE_SHADOW] = true;
 variable[mxConstants.STYLE_FILLCOLOR] = '#FF00FF';
-variable[mxConstants.STYLE_STROKECOLOR] = '#000000';
-variable[mxConstants.STYLE_FONTCOLOR] = '#000000';
+variable[mxConstants.STYLE_STROKECOLOR] = 'none'; //#000000';
+variable[mxConstants.STYLE_FONTCOLOR] = '#FFFFFF';
+variable[mxConstants.STYLE_FONTSIZE] = 30;
+variable[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD;
+
+//variable[mxConstants.STYLE_STROKEWIDTH] = 0;
 variable[mxConstants.STYLE_FILL_OPACITY] = 100;
 
 graph.getStylesheet().putCellStyle(pdVertexType.VARIABLE, variable);
@@ -211,7 +203,7 @@ function NestedShape() {
 }
 mxUtils.extend(NestedShape, mxCylinder);
 
-NestedShape.prototype.paintVertexShape = function (c, x, y, w, h) {
+NestedShape.prototype.paintVertexShape = function(c, x, y, w, h) {
     var dy = 20 * this.scale;
     var dx = 20 * this.scale;
     c.translate(x, y);
