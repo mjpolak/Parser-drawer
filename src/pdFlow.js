@@ -7,14 +7,14 @@ var pdVertexType = {
     VARIABLE: 'variable'
 }
 
-var pdEdgeType ={
-    VARIABLE:'variable_edge'
+var pdEdgeType = {
+    VARIABLE: 'variable_edge'
 }
 
 var pdPortType = {
-    DATA:'data_port',
-    IN:'in_port',
-    OUT:'port'
+    DATA: 'data_port',
+    IN: 'in_port',
+    OUT: 'port'
 }
 
 var pdDataSources = [
@@ -23,7 +23,7 @@ var pdDataSources = [
 
 var pdDataTargets = [
     pdVertexType.VARIABLE
-]; 
+];
 
 var pdSourcesVertex = [
     pdVertexType.START,
@@ -37,5 +37,5 @@ var pdTargetVertex = [
 ]
 
 var pdContainersVertex = [
-    pdVertexType.NESTED
+    pdVertexType.NESTED,
 ]

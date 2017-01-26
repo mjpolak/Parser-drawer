@@ -40,11 +40,11 @@
 <body ng-controller="BodyController">
     <div ui-layout>
         <div ui-layout-container>
-            <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:5}">
+            <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:3}">
                 <div ui-layout-container="central">
                     <div ui-layout>
                         <div ui-layout-container>
-                            <div ui-layout="{flow : 'row',disableToggle:true,dividerSize:5}">
+                            <div ui-layout="{flow : 'row',disableToggle:true,dividerSize:3}">
                                 <div ui-layout-container="central">
                                     <div ui-layout="{flow : 'column',disableToggle:true,dividerSize:0}">
                                         <div ui-layout-container size="100px" style="background-color:lightgray;text-align: center">
@@ -66,13 +66,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div ui-layout-container size="10%"><textarea ng-model="xml" style="width:100%;height:99%;padding:0px;margin: 0px"></textarea></pre>
-                                </div>
+                                <textarea ui-layout-container size="20%" ng-model="xml" style="width:100%;padding:0px;margin: 0px;resize: none;">                                    
+                                </textarea>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div ui-layout-container size="10%">BC</div>
+                <div ui-layout-container size="20%">
+                    Test cases:</br>
+                    <textarea ng-model="test_cases" style="width:100%;height:30%;padding:0px;margin: 0px"></textarea> JSON result:</br>
+                    <textarea ng-model="json_result" style="width:100%;height:30%;padding:0px;margin: 0px"></textarea>
+                    </br>
+                    <button type="button" class="btn btn-success" ng-click="startProcessing()">Start Processing</button></br>
+                </div>
             </div>
         </div>
     </div>

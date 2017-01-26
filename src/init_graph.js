@@ -18,12 +18,11 @@ graph.setAllowLoops(false);
 var ruberBand = new mxRubberband(graph);
 var paning = new mxPanningHandler(graph);
 
-graph.getModel().valueForCellChanged = function(cell, value)
-{
-  var previous = cell.value.nodeName;
-  cell.value.nodeName= value;
+graph.getModel().valueForCellChanged = function(cell, value) {
+    var previous = cell.value.nodeName;
+    cell.value.nodeName = value;
 
-  return previous;
+    return previous;
 };
 
 mxEvent.addMouseWheelListener(function(evt, up) {
@@ -93,8 +92,10 @@ mxRubberband.prototype.mouseUp = function(sender, me) {
 }
 
 mxGraph.prototype.isValidDropTarget = function(cell, cells, evt) {
-    
-    return cell.style != null && pdContainersVertex.includes(cell.style);
+
+    return cell.style != null && pdContainersVertex.includes(cell.style) && !cells.some(function(x) {
+        return x.style == pdVertexType.START || x.style == pdVertexType.END
+    });
 }
 
 mxGraph.prototype.oldisValidConnection = mxGraph.prototype.isValidConnection;
@@ -109,10 +110,8 @@ mxGraph.prototype.isValidEnding = function(cell) {
 
 var previous = graph.model.getStyle;
 
-graph.model.getStyle = function(cell)
-{
-    if (cell != null && cell.source != null && cell.source.style == pdPortType.DATA)
-    {
+graph.model.getStyle = function(cell) {
+    if (cell != null && cell.source != null && cell.source.style == pdPortType.DATA) {
         return pdEdgeType.VARIABLE;
     } else {
         return previous.apply(this, arguments)
@@ -132,30 +131,28 @@ mxGraph.prototype.isValidTarget = function(cell) {
         return false;
     return this.isValidEnding(cell);
 }
-mxGraph.prototype.isValidConnection = function(source,target)
-{
+mxGraph.prototype.isValidConnection = function(source, target) {
 
     // variable port to variables
-    if(source != null && target != null)
-    {
+    if (source != null && target != null) {
         var is_data_source = pdDataSources.includes(source.style);
         var id_data_target = pdDataTargets.includes(target.style);
 
 
 
-        if(is_data_source !=  id_data_target)
+        if (is_data_source != id_data_target)
             return false;
 
-        if(source.style==pdVertexType.START && target.style == pdVertexType.END)
+        if (source.style == pdVertexType.START && target.style == pdVertexType.END)
             return false;
     }
-    return this.oldisValidConnection(source,target);
+    return this.oldisValidConnection(source, target);
 }
 graph.validateEdge = function(edge, source, target) {
 
-    if ( !pdSourcesVertex.includes(source.style) && !pdDataSources.includes(source.style)  )
+    if (!pdSourcesVertex.includes(source.style) && !pdDataSources.includes(source.style))
         return 'Cannot be source';
-    if ( !pdTargetVertex.includes(target.style) && !pdDataTargets.includes(target.style) )
+    if (!pdTargetVertex.includes(target.style) && !pdDataTargets.includes(target.style))
         return 'Cannot be target';
 
     var is_data_source = pdDataSources.includes(source.style);
@@ -163,10 +160,9 @@ graph.validateEdge = function(edge, source, target) {
     // console.log("TEST:");
     // console.log(is_data_source);
     // console.log(id_data_target);
-        if(is_data_source !=  id_data_target)
-        {
-            return 'Diffrent connections type'
-        }
+    if (is_data_source != id_data_target) {
+        return 'Diffrent connections type'
+    }
 
     for (var i in source.edges) {
         if (source.edges[i].target === target) {

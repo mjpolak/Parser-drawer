@@ -1,40 +1,42 @@
 angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
-    .controller('BodyController', function ($scope, ngDialog) {
-        $scope.zoomIn = function () {
+    .controller('BodyController', function($scope, ngDialog) {
+        $scope.test_cases = "Testowe dane do testów";
+        $scope.json_result = "";
+        $scope.zoomIn = function() {
             graph.zoomIn();
         }
 
-        $scope.zoomOut = function () {
+        $scope.zoomOut = function() {
 
             graph.zoomOut();
         }
 
-        $scope.focusAll = function () {
+        $scope.focusAll = function() {
             graph.fit();
         }
 
-        $scope.undo = function () {
+        $scope.undo = function() {
             editor.execute('undo');
         }
-        $scope.redo = function () {
+        $scope.redo = function() {
             editor.execute('redo');
         }
 
-        $scope.group = function () {
+        $scope.group = function() {
             editor.execute('group');
         }
 
-        $scope.ungroup = function () {
+        $scope.ungroup = function() {
             editor.execute('ungroup');
         }
 
-        $scope.toXML = function () {
+        $scope.toXML = function() {
             var encoder = new mxCodec();
             var node = encoder.encode(graph.getModel());
             this.xml = mxUtils.getPrettyXml(node);
         }
 
-        $scope.fromXML = function () {
+        $scope.fromXML = function() {
             var doc = mxUtils.parseXml(this.xml);
             var codec = new mxCodec(doc);
             codec.decode(doc.documentElement, graph.getModel());
@@ -44,16 +46,14 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             var data = graph.getChildVertices();
 
             data.forEach(function(element) {
-                if(element.style == pdVertexType.START)
-                {
-                    if(start)
+                if (element.style == pdVertexType.START) {
+                    if (start)
                         graph.getModel().remove(element);
                     else
                         start = true;
                 }
-                if(element.style == pdVertexType.END)
-                {
-                    if(end)
+                if (element.style == pdVertexType.END) {
+                    if (end)
                         graph.getModel().remove(element);
                     else
                         end = true;
@@ -74,21 +74,21 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 a.download = filename;
                 document.body.appendChild(a);
                 a.click();
-                setTimeout(function () {
+                setTimeout(function() {
                     document.body.removeChild(a);
                     window.URL.revokeObjectURL(url);
                 }, 0);
             }
         }
 
-        $scope.download = function () {
+        $scope.download = function() {
 
 
             ngDialog.open({
                 template: '<p >File name:</p><input type="text" ng-model="file_name"/> .xml</br><button type="button" class="btn btn-info" ng-click="download()">Download</button></br>',
                 plain: true,
-                controller: ['$scope', function ($scopedx) {
-                    $scopedx.download = function () {
+                controller: ['$scope', function($scopedx) {
+                    $scopedx.download = function() {
                         var encoder = new mxCodec();
                         var node = encoder.encode(graph.getModel());
                         this.xml = mxUtils.getPrettyXml(node);
@@ -99,26 +99,26 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             });
         }
 
-        $scope.open = function () {
+        $scope.open = function() {
 
             ngDialog.open({
                 template: '<p >File name:</p><input type="file" id="file" name="file" enctype="multipart/form-data" />',
                 plain: true,
-                controller: ['$scope', function ($scopedx) {
+                controller: ['$scope', function($scopedx) {
                     function readFile(evt) {
                         var files = evt.target.files;
                         var file = files[0];
                         var reader = new FileReader();
-                        reader.onload = function () {
-                            $scope.xml = this.result;
-                            $scope.fromXML();
-                            $scopedx.closeThisDialog("true");
-                        }
-                        console.log(file);
+                        reader.onload = function() {
+                                $scope.xml = this.result;
+                                $scope.fromXML();
+                                $scopedx.closeThisDialog("true");
+                            }
+                            //console.log(file);
                         reader.readAsText(file)
                     }
 
-                    $scopedx.$on('ngDialog.opened', function (e, $dialog) {
+                    $scopedx.$on('ngDialog.opened', function(e, $dialog) {
                         document.getElementById('file').addEventListener('change', readFile, false);
                     });
                 }]
@@ -127,9 +127,9 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
 
 
-        var insertVertex = function (vertexCreator) {
+        var insertVertex = function(vertexCreator) {
             var event = {
-                mouseDown: function (sender, evt) {
+                mouseDown: function(sender, evt) {
                     var parent;
                     if (evt.state == null) {
                         parent = graph.getDefaultParent();
@@ -147,19 +147,19 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                     }
                     graph.removeMouseListener(event);
                 },
-                mouseMove: function (sender, evt) {},
-                mouseUp: function (sender, evt) {}
+                mouseMove: function(sender, evt) {},
+                mouseUp: function(sender, evt) {}
             }
             graph.addMouseListener(event);
         }
 
 
-        $scope.createNewMask = function () {
+        $scope.createNewMask = function() {
 
-            var create = function () {
+            var create = function() {
                 var obiekt = {
                     nodeName: 'Nowa maska',
-                    clone: function () {
+                    clone: function() {
                         return angular.copy(this);
                     }
                 }
@@ -172,16 +172,16 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             insertVertex(create);
         }
 
-        $scope.createNewVariable = function () {
+        $scope.createNewVariable = function() {
 
-            var create = function () {
+            var create = function() {
                 var obiekt = {
                     nodeName: 'V',
-                    clone: function () {
+                    clone: function() {
                         return angular.copy(this);
                     }
                 }
-            var vertex = graph.createVertex(parent, null, obiekt, 400, 200, 50, 50, pdVertexType.VARIABLE);
+                var vertex = graph.createVertex(parent, null, obiekt, 400, 200, 50, 50, pdVertexType.VARIABLE);
                 return vertex;
             }
             insertVertex(create);
@@ -192,13 +192,13 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
         } else {
             var parent = graph.getDefaultParent();
             var keyHandler = new mxKeyHandler(graph);
-            keyHandler.bindKey(46, function (evt) {
+            keyHandler.bindKey(46, function(evt) {
                 if (graph.isEnabled()) {
                     graph.removeCells();
                 }
             });
 
-            keyHandler.bindKey(79, function (evt) {
+            keyHandler.bindKey(79, function(evt) {
                 console.log(graph.getSelectionCell().value)
             });
 
@@ -206,14 +206,14 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var obiekt = {
                 nodeName: 'Obiekt',
-                clone: function () {
+                clone: function() {
                     return angular.copy(this);
                 }
             }
 
             var zmienna = {
                 nodeName: 'V',
-                clone: function () {
+                clone: function() {
                     return angular.copy(this);
                 }
             }
@@ -228,5 +228,65 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             }
 
 
+        }
+
+        $scope.startProcessing = function() {
+
+            function DataReader() {
+                this.pos = 0;
+                this.Next = function() {
+
+                    if (this.pos < $scope.test_cases.length) {
+
+                        this.pos++;
+                        return $scope.test_cases[this.pos - 1];
+                    } else
+                        return null;
+                }
+            }
+
+
+            var model = graph.getModel();
+            var all_cells = Object.keys(model.cells).map(function(x) { return model.cells[x] });
+
+            var start_cell;
+            var end_cell;
+            var variables = {};
+
+            all_cells.forEach(function(element) {
+                switch (element.style) {
+                    case pdVertexType.START:
+                        start_cell = element;
+                        break;
+                    case pdVertexType.END:
+                        end_cell = element;
+                        break;
+                    case pdVertexType.VARIABLE:
+                        variables[element.value.nodeName] = '';
+                        break;
+                }
+            }, this);
+
+            var current_cell;
+
+            var dr = new DataReader();
+
+            var possible_cells = [];
+
+            function ChangeCurrent(cell) {
+                current_cell = cell;
+
+                possible_cells = current_cell.edges.filter(function(e) {
+                    return e.source == current_cell
+                }).map(function(e) {
+                    return e.target
+                });
+            }
+
+            ChangeCurrent(start_cell);
+
+            while ((c = dr.Next()) != null) {
+                console.log(c);
+            }
         }
     });
