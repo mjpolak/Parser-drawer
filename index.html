@@ -6,6 +6,7 @@
     <title>Parser drawer</title>
     <script type="text/javascript">
         mxBasePath = 'mxgraph/javascript/src';
+        mxLoadResources = false;
     </script>
     <script type="text/javascript" src="mxgraph/javascript/src/js/mxClient.js"></script>
     <script src="lib/angular.min.js"></script>
@@ -52,11 +53,13 @@
                                             <button type="button" class="btn btn-info" ng-click="focusAll()">All</button></br>
                                             <button type="button" class="btn btn-info" ng-click="undo()">Undo</button></br>
                                             <button type="button" class="btn btn-info" ng-click="redo()">Redo</button></br>
-                                            <button type="button" class="btn btn-info" ng-click="group()">Group</button></br>
-                                            <button type="button" class="btn btn-info" ng-click="ungroup()">Ungroup</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="toXML()">XML</button></br>
+                                            <!--<button type="button" class="btn btn-info" ng-click="group()">Group</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="ungroup()">Ungroup</button></br>-->
                                             <button type="button" class="btn btn-info" ng-click="download()">Download</button></br>
                                             <button type="button" class="btn btn-info" ng-click="open()">Open</button></br>
-                                            <button type="button" class="btn btn-info" ng-click="createNew()">createNew</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="createNewMask()">mask</button></br>
+                                            <button type="button" class="btn btn-info" ng-click="createNewVariable()">Variable</button></br>
                                         </div>
                                         <div ui-layout-container="central">
                                             <div id="graph_container"></div>

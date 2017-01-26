@@ -1,43 +1,64 @@
 angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
-    .controller('BodyController', function($scope, ngDialog) {
-        $scope.zoomIn = function() {
+    .controller('BodyController', function ($scope, ngDialog) {
+        $scope.zoomIn = function () {
             graph.zoomIn();
         }
 
-        $scope.zoomOut = function() {
+        $scope.zoomOut = function () {
 
             graph.zoomOut();
         }
 
-        $scope.focusAll = function() {
+        $scope.focusAll = function () {
             graph.fit();
         }
 
-        $scope.undo = function() {
+        $scope.undo = function () {
             editor.execute('undo');
         }
-        $scope.redo = function() {
+        $scope.redo = function () {
             editor.execute('redo');
         }
 
-        $scope.group = function() {
+        $scope.group = function () {
             editor.execute('group');
         }
 
-        $scope.ungroup = function() {
+        $scope.ungroup = function () {
             editor.execute('ungroup');
         }
 
-        $scope.toXML = function() {
+        $scope.toXML = function () {
             var encoder = new mxCodec();
             var node = encoder.encode(graph.getModel());
             this.xml = mxUtils.getPrettyXml(node);
         }
 
-        $scope.fromXML = function() {
+        $scope.fromXML = function () {
             var doc = mxUtils.parseXml(this.xml);
             var codec = new mxCodec(doc);
             codec.decode(doc.documentElement, graph.getModel());
+
+            var start = false;
+            var end = false;
+            var data = graph.getChildVertices();
+
+            data.forEach(function(element) {
+                if(element.style == pdVertexType.START)
+                {
+                    if(start)
+                        graph.getModel().remove(element);
+                    else
+                        start = true;
+                }
+                if(element.style == pdVertexType.END)
+                {
+                    if(end)
+                        graph.getModel().remove(element);
+                    else
+                        end = true;
+                }
+            });
         }
 
         function download(data, filename, type) {
@@ -53,21 +74,21 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 a.download = filename;
                 document.body.appendChild(a);
                 a.click();
-                setTimeout(function() {
+                setTimeout(function () {
                     document.body.removeChild(a);
                     window.URL.revokeObjectURL(url);
                 }, 0);
             }
         }
 
-        $scope.download = function() {
+        $scope.download = function () {
 
 
             ngDialog.open({
                 template: '<p >File name:</p><input type="text" ng-model="file_name"/> .xml</br><button type="button" class="btn btn-info" ng-click="download()">Download</button></br>',
                 plain: true,
-                controller: ['$scope', function($scopedx) {
-                    $scopedx.download = function() {
+                controller: ['$scope', function ($scopedx) {
+                    $scopedx.download = function () {
                         var encoder = new mxCodec();
                         var node = encoder.encode(graph.getModel());
                         this.xml = mxUtils.getPrettyXml(node);
@@ -78,53 +99,37 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             });
         }
 
-        $scope.open = function() {
+        $scope.open = function () {
 
             ngDialog.open({
                 template: '<p >File name:</p><input type="file" id="file" name="file" enctype="multipart/form-data" />',
                 plain: true,
-                controller: ['$scope', function($scopedx) {
+                controller: ['$scope', function ($scopedx) {
                     function readFile(evt) {
                         var files = evt.target.files;
                         var file = files[0];
                         var reader = new FileReader();
-                        reader.onload = function() {
+                        reader.onload = function () {
                             $scope.xml = this.result;
                             $scope.fromXML();
                             $scopedx.closeThisDialog("true");
                         }
+                        console.log(file);
                         reader.readAsText(file)
                     }
 
-                    $scopedx.$on('ngDialog.opened', function(e, $dialog) {
+                    $scopedx.$on('ngDialog.opened', function (e, $dialog) {
                         document.getElementById('file').addEventListener('change', readFile, false);
                     });
                 }]
             });
         }
-        $scope.createNew = function() {
-            // var adder = function(sender, evt) {
-            //     var cell = evt.getProperty('cell');
-            //     var event = evt.getProperty('event');
-
-            if (cell == null && event != null) {
-                var obiekt = {
-                    nodeName: 'Nowa maska',
-                    clone: function() {
-                        return angular.copy(this);
-                    }
-                }
-                var parent = graph.getDefaultParent();
-                graph.insertVertex(parent, null, obiekt, event.x, event.y, 30, 30, pdVertexType.MASK);
-            }
-
-            //     graph.removeListener(adder);
-            // }
-            // graph.addListenerOnce(mxEvent.CLICK, adder);
 
 
+
+        var insertVertex = function (vertexCreator) {
             var event = {
-                mouseDown: function(sender, evt) {
+                mouseDown: function (sender, evt) {
                     var parent;
                     if (evt.state == null) {
                         parent = graph.getDefaultParent();
@@ -133,21 +138,53 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                         parent = evt.parent;
 
                     if (parent) {
-                        var obiekt = {
-                            nodeName: 'Nowa maska',
-                            clone: function() {
-                                return angular.copy(this);
-                            }
-                        }
-                        var pt = mxUtils.convertPoint(graph.container, evt.evt.x, evt.evt.y);
-                        graph.insertVertex(parent, null, obiekt, pt.x, pt.y, 120, 30, pdVertexType.MASK);
+
+                        var vertex = vertexCreator();
+                        var pt = mxUtils.convertPoint(graph.container, evt.evt.clientX, evt.evt.clientY);
+                        editor.addVertex(null, vertex, pt.x, pt.y);
+
+                        //graph.insertVertex(parent, null, obiekt, pt.x, pt.y, 120, 30, pdVertexType.MASK);
                     }
                     graph.removeMouseListener(event);
                 },
-                mouseMove: function(sender, evt) {},
-                mouseUp: function(sender, evt) {}
+                mouseMove: function (sender, evt) {},
+                mouseUp: function (sender, evt) {}
             }
             graph.addMouseListener(event);
+        }
+
+
+        $scope.createNewMask = function () {
+
+            var create = function () {
+                var obiekt = {
+                    nodeName: 'Nowa maska',
+                    clone: function () {
+                        return angular.copy(this);
+                    }
+                }
+                var vertex = graph.createVertex(parent, null, obiekt, 100, 20, 100, 50, pdVertexType.MASK);
+                var v11 = graph.insertVertex(vertex, null, 'V', 1, 0, 20, 20, pdPortType.DATA);
+                v11.geometry.offset = new mxPoint(-10, 15);
+                v11.geometry.relative = true;
+                return vertex;
+            }
+            insertVertex(create);
+        }
+
+        $scope.createNewVariable = function () {
+
+            var create = function () {
+                var obiekt = {
+                    nodeName: 'V',
+                    clone: function () {
+                        return angular.copy(this);
+                    }
+                }
+            var vertex = graph.createVertex(parent, null, obiekt, 400, 200, 50, 50, pdVertexType.VARIABLE);
+                return vertex;
+            }
+            insertVertex(create);
         }
 
         if (!mxClient.isBrowserSupported()) {
@@ -155,13 +192,13 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
         } else {
             var parent = graph.getDefaultParent();
             var keyHandler = new mxKeyHandler(graph);
-            keyHandler.bindKey(46, function(evt) {
+            keyHandler.bindKey(46, function (evt) {
                 if (graph.isEnabled()) {
                     graph.removeCells();
                 }
             });
 
-            keyHandler.bindKey(79, function(evt) {
+            keyHandler.bindKey(79, function (evt) {
                 console.log(graph.getSelectionCell().value)
             });
 
@@ -169,14 +206,14 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var obiekt = {
                 nodeName: 'Obiekt',
-                clone: function() {
+                clone: function () {
                     return angular.copy(this);
                 }
             }
 
             var zmienna = {
                 nodeName: 'V',
-                clone: function() {
+                clone: function () {
                     return angular.copy(this);
                 }
             }
@@ -184,13 +221,8 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             graph.getModel().beginUpdate();
             try {
 
-                var v1 = graph.insertVertex(parent, null, 'start', 200, 20, 30, 30, pdVertexType.START);
-                var v2 = graph.insertVertex(parent, null, 'koniec', 200, 200, 30, 30, pdVertexType.END);
-                var v3 = graph.insertVertex(parent, null, obiekt, 400, 100, 100, 50, pdVertexType.MASK);
-                var v4 = graph.insertVertex(parent, null, zmienna, 400, 200, 50, 50, pdVertexType.VARIABLE);
-
-                var e1 = graph.insertEdge(parent, null, '', v1, v3);
-                var e2 = graph.insertEdge(parent, null, '', v3, v2);
+                var v1 = graph.insertVertex(parent, null, 'start', 200, 20, 35, 35, pdVertexType.START);
+                var v2 = graph.insertVertex(parent, null, 'koniec', 200, 200, 35, 35, pdVertexType.END);
             } finally {
                 graph.getModel().endUpdate();
             }
