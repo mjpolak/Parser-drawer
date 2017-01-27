@@ -7,9 +7,9 @@ var pdVertexType = {
     VARIABLE: 'variable'
 }
 
-var pdOptionalFilters = {
+var pdOptionalFilters = [
     pdVertexType.MASK
-}
+]
 
 var pdEdgeType = {
     VARIABLE: 'variable_edge'
@@ -43,3 +43,51 @@ var pdTargetVertex = [
 var pdContainersVertex = [
     pdVertexType.NESTED,
 ]
+
+var pdLogicMask = function() {}
+
+pdLogicMask.prototype.Match = function(char) {
+    return this.nodeName == '*' || this.nodeName == char || (this.nodeName == ' ' && char == ' ');
+}
+
+var pdLogicVariable = function() {}
+
+pdLogicVariable.prototype.Append = function(char) {
+    return this.nodeName == '*' || this.nodeName == char || (this.nodeName == ' ' && char == ' ');
+}
+
+var pdLogicObjects = {}
+pdLogicObjects[pdVertexType.MASK] = pdLogicMask;
+pdLogicObjects[pdVertexType.VARIABLE] = pdLogicMask;
+
+var pdCloner = {
+    clone: function() {
+        return angular.copy(this);
+    }
+}
+
+var pdFlow = {
+    CreateValueByType: function(type) {
+        var logicObj = pdLogicObjects[type];
+        if (logicObj != null) {
+            var obj = new logicObj();
+            Object.assign(obj, pdCloner);
+            return obj;
+        }
+        return {}
+    },
+    AddLogicToCell: function(cell) {
+        if (cell.style == null)
+            return;
+
+
+        var logicObj = pdLogicObjects[cell.style];
+
+        if (logicObj != null) {
+            var obj = new logicObj();
+
+            Object.assign(obj, cell.value, pdCloner);
+            cell.value = obj;
+        }
+    }
+}

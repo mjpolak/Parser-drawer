@@ -188,6 +188,11 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                         end = true;
                 }
             });
+
+            var cells = Object.keys(model.cells).map(function(x) { return model.cells[x] });
+            cells.forEach(function(element) {
+                pdFlow.AddLogicToCell(element)
+            }, this);
         }
 
         $scope.fromXML();
@@ -288,13 +293,9 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
         $scope.createNewMask = function() {
 
             var create = function() {
-                var obiekt = {
-                    nodeName: 'Nowa maska',
-                    clone: function() {
-                        return angular.copy(this);
-                    }
-                }
-                var vertex = graph.createVertex(parent, null, obiekt, 100, 20, 100, 50, pdVertexType.MASK);
+                var object = pdFlow.CreateValueByType(pdVertexType.MASK);
+                object.nodeName = '*';
+                var vertex = graph.createVertex(parent, null, object, 100, 20, 100, 50, pdVertexType.MASK);
                 var v11 = graph.insertVertex(vertex, null, 'V', 1, 0, 20, 20, pdPortType.DATA);
                 v11.geometry.offset = new mxPoint(-10, 15);
                 v11.geometry.relative = true;
@@ -306,13 +307,11 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
         $scope.createNewVariable = function() {
 
             var create = function() {
-                var obiekt = {
-                    nodeName: 'V',
-                    clone: function() {
-                        return angular.copy(this);
-                    }
-                }
-                var vertex = graph.createVertex(parent, null, obiekt, 400, 200, 50, 50, pdVertexType.VARIABLE);
+                var object = pdFlow.CreateValueByType(pdVertexType.VARIABLE);
+                object.nodeName = 'V';
+
+
+                var vertex = graph.createVertex(parent, null, object, 400, 200, 50, 50, pdVertexType.VARIABLE);
                 return vertex;
             }
             insertVertex(create);
@@ -404,11 +403,13 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var possible_cells = [];
 
-            var  ChangeCurrent = function(cell) {
+            var ChangeCurrent = function(cell) {
+
+                console.log("Ide do cell" + cell.value.nodeName);
                 current_cell = cell;
 
                 possible_cells = current_cell.edges.filter(function(e) {
-                    return e.source == current_cell && pdOptionalFilters.includes( e.target.style)
+                    return e.source == current_cell && pdOptionalFilters.includes(e.target.style)
                 }).map(function(e) {
                     return e.target
                 });
@@ -416,13 +417,46 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             ChangeCurrent(start_cell);
 
-            var FindMatching_Ways = function(char)
-            {
-                
+            var FindMatchingWays = function(char) {
+                for (var i = 0, l = possible_cells.length; i < l; i++) {
+                    if (possible_cells[i].value.Match(char))
+                        return possible_cells[i];
+                }
+                return null;
             }
 
+            var error = false;
+            var result;
             while ((c = dr.Next()) != null) {
-                console.log(c);
+
+                var other = FindMatchingWays(c);
+                if (other != null) {
+                    ChangeCurrent(other);
+                } else {
+                    if (!current_cell.value.Match(c)) {
+                        result = 'Unexpected value at ' + dr.pos;
+                        error = true;
+                        break;
+                    }
+                }
+
+                if (current_cell.children != null) {
+                    var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.style));
+                    data_sources.forEach(function(element) {
+                        if (element.edges) {
+                            var targets = element.edges.map(x => x.target);
+                            targets.forEach(function(element) {
+                                variables[element.value.nodeName] += c;
+                            }, this);
+                        }
+                    }, this);
+                }
+            }
+
+            if (error) {
+                $scope.json_result = result;
+            } else {
+                $scope.json_result = JSON.stringify(variables, null, 2);
             }
         }
     });
