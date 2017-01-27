@@ -6,7 +6,7 @@ var model = graph.getModel();
 editor.setGraphContainer(container);
 
 mxConstants.DEFAULT_HOTSPOT = 1;
-mxConstants.MIN_HOTSPOT_SIZE = 20;
+mxConstants.MIN_HOTSPOT_SIZE = 200;
 
 
 mxEvent.disableContextMenu(container);
@@ -119,15 +119,18 @@ graph.model.getStyle = function(cell) {
 }
 
 mxGraph.prototype.isValidSource = function(cell) {
-    //console.log('isValidSource');
-    // if (cell != null && cell.value && cell.value.source == false)
-    if (cell != null && cell.style && (!pdSourcesVertex.includes(cell.style) && cell.style != pdPortType.DATA))
-        return false;
+    if (cell != null && cell.style) {
+        if (!pdSourcesVertex.includes(cell.style) && cell.style != pdPortType.DATA)
+            return false;
+        if (pdSourcesVertex.includes(cell.style) && cell.edges != null && cell.edges.some(x => x.source == cell && x.target != null))
+            return false;
+    }
+
     return this.isValidEnding(cell);
 }
 
 mxGraph.prototype.isValidTarget = function(cell) {
-    if (cell != null && cell.style && !pdTargetVertex.includes(cell.style))
+    if (cell == null || cell.style == null || !(pdTargetVertex.includes(cell.style) || pdDataTargets.includes(cell.style)))
         return false;
     return this.isValidEnding(cell);
 }
@@ -165,7 +168,7 @@ graph.validateEdge = function(edge, source, target) {
     }
 
     for (var i in source.edges) {
-        if (source.edges[i].target === target) {
+        if (source.edges[i].target === target && source.edges[i] != edge) {
             return 'Only single connection';
         }
     }
@@ -176,7 +179,7 @@ graph.validateEdge = function(edge, source, target) {
 var edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
 
 
-edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.ElbowConnector;
+edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.OrthConnector;
 edgeStyle[mxConstants.STYLE_ROUNDED] = true;
 //edgeStyle[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_DIAMOND;
 edgeStyle[mxConstants.STYLE_ENDSIZE] = 20;
@@ -244,6 +247,63 @@ mask[mxConstants.STYLE_SHADOW] = false;
 
 graph.getStylesheet().putCellStyle(pdVertexType.MASK, mask);
 
+
+
+function SplitterShape() {
+    mxCylinder.call(this);
+}
+mxUtils.extend(SplitterShape, mxCylinder);
+
+SplitterShape.prototype.paintVertexShape = function(c, x, y, w, h) {
+    var dy = 10 * this.scale;
+    var dx = 10 // * this.scale;
+    c.translate(x, y);
+    c.setShadow(false);
+    c.begin();
+    c.setFillAlpha(100);
+
+    c.moveTo(dx, 0);
+    c.lineTo(w - dx, 0);
+    c.lineTo(w, h);
+    c.lineTo(0, h);
+    c.close();
+
+    c.fillAndStroke();
+}
+
+mxCellRenderer.prototype.defaultShapes['shape_splitter'] = SplitterShape;
+
+var splitter = angular.copy(mask);
+//mask[mxConstants.STYLE_ROUNDED] = true;
+splitter[mxConstants.STYLE_SHAPE] = 'shape_splitter';
+splitter[mxConstants.STYLE_SHADOW] = true;
+splitter[mxConstants.STYLE_ARCSIZE] = 20;
+splitter[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
+splitter[mxConstants.STYLE_STROKECOLOR] = '#000000';
+splitter[mxConstants.STYLE_FOLDABLE] = '0';
+splitter[mxConstants.STYLE_FONTCOLOR] = '#000000';
+splitter[mxConstants.STYLE_RESIZABLE] = '0';
+splitter[mxConstants.STYLE_FILL_OPACITY] = 100;
+splitter[mxConstants.STYLE_SHADOW] = false;
+//mask[mxConstants.STYLE_EDITABLE] = 0;
+
+graph.getStylesheet().putCellStyle(pdVertexType.SPLITTER, splitter);
+
+var out_port = angular.copy(mask);
+out_port[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE;
+out_port[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
+out_port[mxConstants.STYLE_STROKECOLOR] = '#000000'; //#000000';
+out_port[mxConstants.STYLE_FOLDABLE] = '0';
+out_port[mxConstants.STYLE_FONTCOLOR] = '#000000';
+out_port[mxConstants.STYLE_STROKEWIDTH] = 2;
+//data_port[mxConstants.STYLE_RESIZABLE] = '0';
+//data_port[mxConstants.STYLE_MOVABLE] = '0';
+out_port[mxConstants.STYLE_FILL_OPACITY] = 100;
+out_port[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD;
+out_port[mxConstants.STYLE_SHADOW] = false;
+out_port[mxConstants.STYLE_EDITABLE] = 0;
+
+graph.getStylesheet().putCellStyle(pdPortType.OUT, out_port);
 
 var data_port = angular.copy(mask);
 data_port[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE;
