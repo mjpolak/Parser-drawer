@@ -7,6 +7,10 @@ var pdVertexType = {
     VARIABLE: 'variable'
 }
 
+var pdOptionalFilters = {
+    pdVertexType.MASK
+}
+
 var pdEdgeType = {
     VARIABLE: 'variable_edge'
 }

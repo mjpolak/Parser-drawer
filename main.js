@@ -404,17 +404,22 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var possible_cells = [];
 
-            function ChangeCurrent(cell) {
+            var  ChangeCurrent = function(cell) {
                 current_cell = cell;
 
                 possible_cells = current_cell.edges.filter(function(e) {
-                    return e.source == current_cell
+                    return e.source == current_cell && pdOptionalFilters.includes( e.target.style)
                 }).map(function(e) {
                     return e.target
                 });
             }
 
             ChangeCurrent(start_cell);
+
+            var FindMatching_Ways = function(char)
+            {
+                
+            }
 
             while ((c = dr.Next()) != null) {
                 console.log(c);
