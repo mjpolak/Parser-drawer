@@ -5,89 +5,108 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
     <mxCell id="2" value="start" style="start" parent="1" vertex="1">
-      <mxGeometry x="200" y="20" width="35" height="35" as="geometry"/>
+      <mxGeometry x="90" y="10" width="35" height="35" as="geometry"/>
     </mxCell>
     <mxCell id="3" value="koniec" style="end" parent="1" vertex="1">
       <mxGeometry x="200" y="540" width="35" height="35" as="geometry"/>
     </mxCell>
-    <mxCell id="4" style="variable" parent="1" vertex="1">
-      <Object nodeName="dsaddsadsa" as="value"/>
-      <mxGeometry x="540" y="160" width="130" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="6" style="mask" parent="1" vertex="1">
-      <Object nodeName="*" as="value"/>
-      <mxGeometry x="210" y="160" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="5" value="V" style="data_port" parent="6" vertex="1">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="15" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="7" value="" parent="1" source="2" target="6" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="10" style="splitter" parent="1" vertex="1">
+    <mxCell id="28" style="splitter" parent="1" vertex="1">
       <Object nodeName="" as="value"/>
-      <mxGeometry x="150" y="320" width="115" height="30" as="geometry"/>
+      <mxGeometry x="170" y="130" width="65" height="30" as="geometry"/>
     </mxCell>
-    <mxCell id="8" value="1" style="out_port" parent="10" vertex="1">
+    <mxCell id="25" value="1" style="out_port" parent="28" vertex="1">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="9" value="2" style="out_port" parent="10" vertex="1">
+    <mxCell id="26" value="2" style="out_port" parent="28" vertex="1">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="35" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="22" value="3" style="out_port" vertex="1" parent="10">
-      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="60" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="23" value="4" style="out_port" vertex="1" parent="10">
-      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="85" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="11" value="" style="entryX=0.5;entryY=0;" parent="1" source="6" target="10" edge="1">
+    <mxCell id="29" value="" style="entryX=0.5;entryY=0;" parent="1" source="2" target="28" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="13" style="mask" parent="1" vertex="1">
-      <Object nodeName="*" as="value"/>
-      <mxGeometry x="115" y="432" width="100" height="50" as="geometry"/>
+    <mxCell id="31" style="mask" parent="1" vertex="1">
+      <Object nodeName="marcin" as="value"/>
+      <mxGeometry x="40" y="250" width="100" height="50" as="geometry"/>
     </mxCell>
-    <mxCell id="12" value="V" style="data_port" parent="13" vertex="1">
+    <mxCell id="30" value="V" style="data_port" parent="31" vertex="1">
       <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="15" as="offset"/>
+        <mxPoint x="-10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="14" value="" parent="1" source="8" target="13" edge="1">
+    <mxCell id="32" value="" parent="1" source="25" target="31" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="190" y="200"/>
+          <mxPoint x="90" y="200"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="34" style="mask" parent="1" vertex="1">
+      <Object nodeName="mar" as="value"/>
+      <mxGeometry x="300" y="260" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="33" value="V" style="data_port" parent="34" vertex="1">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="35" value="" parent="1" source="26" target="34" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="215" y="200"/>
+          <mxPoint x="350" y="200"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="36" value="" parent="1" source="34" target="42" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="282" y="290" as="sourcePoint"/>
+        <mxPoint x="210" y="370" as="targetPoint"/>
+        <Array as="points">
+          <mxPoint x="350" y="488"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="37" value="" parent="1" source="31" target="42" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="90" y="488"/>
+        </Array>
+        <mxPoint x="170" y="440" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="38" style="variable" parent="1" vertex="1">
+      <Object nodeName="Zmienna" as="value"/>
+      <mxGeometry x="190" y="200" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="39" value="" parent="1" source="33" target="38" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="17" value="" parent="1" source="9" target="13" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
+    <mxCell id="40" value="" parent="1" source="30" target="38" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points"/>
+      </mxGeometry>
     </mxCell>
-    <mxCell id="18" value="" parent="1" source="12" target="4" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
+    <mxCell id="42" style="mask" vertex="1" parent="1">
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="164" y="463" width="100" height="50" as="geometry"/>
     </mxCell>
-    <mxCell id="19" value="" parent="1" source="5" target="4" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
+    <mxCell id="41" value="V" style="data_port" vertex="1" parent="42">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
     </mxCell>
-    <mxCell id="20" value="" parent="1" source="13" target="3" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="24" value="" edge="1" parent="1" source="22" target="13">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="25" value="" edge="1" parent="1" source="23" target="13">
+    <mxCell id="43" value="" edge="1" parent="1" source="42" target="3">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
   </root>
 </mxGraphModel>
 
 `;
-        $scope.test_cases = "Testowe dane do testów";
+        $scope.test_cases = "marc";
         $scope.json_result = "";
         $scope.zoomIn = function() {
             graph.zoomIn();
@@ -370,59 +389,102 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             var dr = new DataReader();
 
             var possible_cells = [];
-
+            var consume=[];
+            var buffer = '';
             var ChangeCurrent = function(cell) {
 
-                console.log("Ide do cell" + cell.value.nodeName);
                 current_cell = cell;
 
                 var edges = current_cell.edges.filter(x => x.source == current_cell);
                 if (edges.length > 0 && edges[0].target.GetPossibleCells != null)
+                {
                     possible_cells = edges[0].target.GetPossibleCells();
+                    consume = possible_cells.map(x=>0);
+                }
                 else
                     possible_cells = [];
             }
 
             ChangeCurrent(start_cell);
 
-            var FindMatchingWays = function(char) {
-                for (var i = 0, l = possible_cells.length; i < l; i++) {
-                    if (possible_cells[i].Match(char))
-                        return possible_cells[i];
-                }
-                return null;
-            }
-
             var error = false;
-            var result;
-            while ((c = dr.Next()) != null) {
+            var result={};
 
-                var other = FindMatchingWays(c);
-                if (other != null) {
-                    ChangeCurrent(other);
-                } else {
-                    if (current_cell.Match == null || !current_cell.Match(c)) {
-                        result = 'Unexpected value at ' + dr.pos;
-                        error = true;
-                        break;
-                    }
-                }
+            var Step = function()
+            {
+                possible_cells.forEach(function(element,idx) {
+                    if(consume[idx]==0)
+                    {
+                        if(element.Match(buffer))
+                        {
+                            consume[idx] = buffer.length;
+                        } else {
+                            if(!element.PartialMatch(buffer))
+                                consume[idx] = -1;
+                        }
+                    } 
+                }, this);
 
-                if (current_cell.children != null) {
-                    var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.style));
-                    data_sources.forEach(function(element) {
-                        if (element.edges) {
-                            var targets = element.edges.map(x => x.target);
-                            targets.forEach(function(element) {
-                                variables[element.value.nodeName] += c;
+                var all_check = !consume.some(x=>x==0);
+                if( all_check)
+                {
+                    var next_id = consume.findIndex(x=>x>0);
+
+                    if (next_id >= 0) {
+                        var other = possible_cells[next_id];
+                        var to_skip = consume[next_id];
+                        var rest = buffer.substring(0,to_skip);
+                        var temp_buffer = buffer.substr(to_skip,buffer.length-to_skip);
+                        
+                        var len = temp_buffer.length;
+                        ChangeCurrent(other);
+
+
+                        if (current_cell.children != null) {
+                            var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.style));
+                            data_sources.forEach(function(element) {
+                                if (element.edges) {
+                                    var targets = element.edges.map(x => x.target);
+                                    targets.forEach(function(element) {
+                                        variables[element.value.nodeName] += rest;
+                                    }, this);
+                                }
                             }, this);
                         }
-                    }, this);
+                        buffer = '';
+                        for(var i=0;i<len;i++)
+                        {
+                            buffer+=temp_buffer[i];
+                            var res = Step();
+                            if( res.error != null)
+                                return res;
+                        }
+
+                    } else {
+                        if (current_cell.Match == null || !current_cell.Match(c)) {
+                            return {message:'Unexpected value at ' + dr.pos,error:true}
+                        }
+                    }
+
+
                 }
+                return {}
             }
 
-            if (error) {
-                $scope.json_result = result;
+            while ((c = dr.Next()) != null) {
+                buffer+=c;
+                result = Step();
+                if(result.error != null)
+                    break;
+            }
+            if( result.error != true)
+            {
+                buffer+='\0'
+                result = Step();
+            }
+
+            if (result.error) {
+                $scope.json_result = result.message;
             } else {
                 $scope.json_result = JSON.stringify(variables, null, 2);
             }

@@ -53,9 +53,22 @@ pdCellExtMask.prototype.Match = function(char) {
     return this.value.nodeName == '*' || this.value.nodeName == char || (this.value.nodeName == ' ' && char == ' ');
 }
 
+pdCellExtMask.prototype.PartialMatch = function(string) {
+    return this.value.nodeName.length >= string.length && this.value.nodeName.substring(0,string.length)==string;
+}
+
 pdExtVariable.prototype.Append = function(char) {
 return this.value.nodeName == '*' || this.value.nodeName == char || (this.value.nodeName == ' ' && char == ' ');
 }
+
+pdEndStart.prototype.Match = function(char) {
+    return char =='\0';
+}
+
+pdEndStart.prototype.PartialMatch = function(string) {
+    return false;
+}
+
 
 pdCellExtSplitter.prototype.GetPossibleCells = function() {
     if (this.children == null)
@@ -107,7 +120,7 @@ pdCellStart.prototype.GetPossibleCells = function() {
 }
 
 pdEndStart.prototype.GetPossibleCells = function() {
-    return [];
+    return [this];
 }
 
 var pdCellExtensionObjects = {}
