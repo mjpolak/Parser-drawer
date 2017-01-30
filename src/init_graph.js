@@ -5,10 +5,10 @@ var graph = editor.graph;
 var model = graph.getModel();
 editor.setGraphContainer(container);
 
-mxConstants.DEFAULT_HOTSPOT = 1;
-mxConstants.MIN_HOTSPOT_SIZE = 200;
+// mxConstants.DEFAULT_HOTSPOT = 1;
+// mxConstants.MIN_HOTSPOT_SIZE = 50;
 
-
+mxConnectionHandler.prototype.connectImage = new mxImage('images/connector.gif', 16, 16);
 mxEvent.disableContextMenu(container);
 graph.setDropEnabled(true);
 //graph.setCellsEditable(false);
@@ -255,20 +255,36 @@ function SplitterShape() {
 mxUtils.extend(SplitterShape, mxCylinder);
 
 SplitterShape.prototype.paintVertexShape = function(c, x, y, w, h) {
-    var dy = 10 * this.scale;
     var dx = 10 // * this.scale;
     c.translate(x, y);
     c.setShadow(false);
-    c.begin();
-    c.setFillAlpha(100);
 
-    c.moveTo(dx, 0);
-    c.lineTo(w - dx, 0);
+c.begin();
+c.setFillAlpha(0);
+    c.moveTo(0,0);
+    c.lineTo(w, 0);
     c.lineTo(w, h);
     c.lineTo(0, h);
-    c.close();
+    c.fill();
+
+    c.begin();
+    c.setFillAlpha(0);
+
+    c.moveTo(2*dx, 10);
+    c.lineTo(w - 2*dx, 10);
+    c.moveTo(w/2, 0);
+    c.lineTo(w/2, 10);
+    
+    var children = this.state.cell.children;
+
+    children.forEach(function(element) {
+        var x = element.geometry.offset.x+element.geometry.width/2;
+        c.moveTo(x, 10);
+        c.lineTo(x, 20);
+    }, this);
 
     c.fillAndStroke();
+
 }
 
 mxCellRenderer.prototype.defaultShapes['shape_splitter'] = SplitterShape;
@@ -284,6 +300,8 @@ splitter[mxConstants.STYLE_FOLDABLE] = '0';
 splitter[mxConstants.STYLE_FONTCOLOR] = '#000000';
 splitter[mxConstants.STYLE_RESIZABLE] = '0';
 splitter[mxConstants.STYLE_FILL_OPACITY] = 100;
+splitter[mxConstants.STYLE_PORT_CONSTRAINT] = mxConstants.DIRECTION_NORTH;
+splitter[mxConstants.STYLE_PORT_CONSTRAINT_ROTATION] = 1;
 splitter[mxConstants.STYLE_SHADOW] = false;
 //mask[mxConstants.STYLE_EDITABLE] = 0;
 
@@ -298,6 +316,8 @@ out_port[mxConstants.STYLE_FONTCOLOR] = '#000000';
 out_port[mxConstants.STYLE_STROKEWIDTH] = 2;
 //data_port[mxConstants.STYLE_RESIZABLE] = '0';
 //data_port[mxConstants.STYLE_MOVABLE] = '0';
+out_port[mxConstants.STYLE_PORT_CONSTRAINT] = mxConstants.DIRECTION_SOUTH;
+out_port[mxConstants.STYLE_PORT_CONSTRAINT_ROTATION] = 1;
 out_port[mxConstants.STYLE_FILL_OPACITY] = 100;
 out_port[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD;
 out_port[mxConstants.STYLE_SHADOW] = false;
@@ -313,6 +333,8 @@ data_port[mxConstants.STYLE_FOLDABLE] = '0';
 data_port[mxConstants.STYLE_FONTCOLOR] = '#FFFFFF';
 //data_port[mxConstants.STYLE_RESIZABLE] = '0';
 //data_port[mxConstants.STYLE_MOVABLE] = '0';
+data_port[mxConstants.STYLE_PORT_CONSTRAINT] = mxConstants.DIRECTION_EAST;
+data_port[mxConstants.STYLE_PORT_CONSTRAINT_ROTATION] = 1;
 data_port[mxConstants.STYLE_FILL_OPACITY] = 100;
 data_port[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD;
 data_port[mxConstants.STYLE_SHADOW] = false;
@@ -388,3 +410,50 @@ nested[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
 nested[mxConstants.STYLE_SPACING_TOP] = 2;
 
 graph.getStylesheet().putCellStyle(pdVertexType.NESTED, nested);
+				mxConstraintHandler.prototype.intersects = function(icon, point, source, existingEdge)
+				{
+					return (!source || existingEdge) || mxUtils.intersects(icon.bounds, point);
+				};
+graph.getAllConnectionConstraints = function(terminal)
+{
+    if (terminal.cell != null && terminal.cell.style != null && terminal.cell.style == pdVertexType.SPLITTER)
+    {
+        return [new mxConnectionConstraint(new mxPoint(0.5, 0))];
+    }
+
+    return null;
+};
+
+graph.popupMenuHandler.factoryMethod = function(menu, cell, evt)
+{
+    if(cell!=null)
+    {
+        if(cell.FillMenu!=null)
+            cell.FillMenu(menu);
+        if(cell.parent.FillMenu!=null)
+            cell.parent.FillMenu(menu);
+    }
+
+    // menu.addItem('Item 1', null, function()
+    // {
+    //     alert('Item 1');
+    // });
+    
+    // menu.addItem('Item 2', null, function()
+    // {
+    //     alert('Item 2');
+    // });
+
+    // menu.addSeparator();
+    
+    // var submenu1 = menu.addItem('Submenu 1', null, null);
+    
+    // menu.addItem('Subitem 1', null, function()
+    // {
+    //     alert('Subitem 1');
+    // }, submenu1);
+    // menu.addItem('Subitem 1', null, function()
+    // {
+    //     alert('Subitem 2');
+    // }, submenu1);
+};

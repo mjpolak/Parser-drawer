@@ -10,137 +10,78 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
     <mxCell id="3" value="koniec" style="end" parent="1" vertex="1">
       <mxGeometry x="200" y="540" width="35" height="35" as="geometry"/>
     </mxCell>
-    <mxCell id="5" style="mask" parent="1" vertex="1">
-      <pdLogicMask nodeName="*" as="value"/>
-      <mxGeometry x="170" y="80" width="100" height="50" as="geometry"/>
+    <mxCell id="4" style="variable" parent="1" vertex="1">
+      <Object nodeName="dsaddsadsa" as="value"/>
+      <mxGeometry x="540" y="160" width="130" height="50" as="geometry"/>
     </mxCell>
-    <mxCell id="4" value="V" style="data_port" parent="5" vertex="1">
+    <mxCell id="6" style="mask" parent="1" vertex="1">
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="210" y="160" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="5" value="V" style="data_port" parent="6" vertex="1">
       <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="-10" y="15" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="7" style="mask" parent="1" vertex="1">
-      <pdLogicMask nodeName="d" as="value"/>
-      <mxGeometry x="170" y="160" width="100" height="50" as="geometry"/>
+    <mxCell id="7" value="" parent="1" source="2" target="6" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="6" value="V" style="data_port" parent="7" vertex="1">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="15" as="offset"/>
+    <mxCell id="10" style="splitter" parent="1" vertex="1">
+      <Object nodeName="" as="value"/>
+      <mxGeometry x="150" y="320" width="115" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="8" value="1" style="out_port" parent="10" vertex="1">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="9" style="mask" parent="1" vertex="1">
-      <pdLogicMask nodeName="*" as="value"/>
-      <mxGeometry x="170" y="240" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="8" value="V" style="data_port" parent="9" vertex="1">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="15" as="offset"/>
+    <mxCell id="9" value="2" style="out_port" parent="10" vertex="1">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="35" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="11" style="mask" parent="1" vertex="1">
-      <pdLogicMask nodeName=" " as="value"/>
-      <mxGeometry x="170" y="330" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="10" value="V" style="data_port" parent="11" vertex="1">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="15" as="offset"/>
+    <mxCell id="22" value="3" style="out_port" vertex="1" parent="10">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="60" y="-10" as="offset"/>
       </mxGeometry>
+    </mxCell>
+    <mxCell id="23" value="4" style="out_port" vertex="1" parent="10">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="85" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="11" value="" style="entryX=0.5;entryY=0;" parent="1" source="6" target="10" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
     </mxCell>
     <mxCell id="13" style="mask" parent="1" vertex="1">
-      <pdLogicMask nodeName="*" as="value"/>
-      <mxGeometry x="170" y="430" width="100" height="50" as="geometry"/>
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="115" y="432" width="100" height="50" as="geometry"/>
     </mxCell>
     <mxCell id="12" value="V" style="data_port" parent="13" vertex="1">
       <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="-10" y="15" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="14" value="" parent="1" source="2" target="5" edge="1">
+    <mxCell id="14" value="" parent="1" source="8" target="13" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="16" value="" parent="1" source="5" target="7" edge="1">
+    <mxCell id="17" value="" parent="1" source="9" target="13" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="18" value="" parent="1" source="7" target="9" edge="1">
+    <mxCell id="18" value="" parent="1" source="12" target="4" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="20" value="" parent="1" source="9" target="11" edge="1">
+    <mxCell id="19" value="" parent="1" source="5" target="4" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="23" value="" parent="1" source="13" target="3" edge="1">
+    <mxCell id="20" value="" parent="1" source="13" target="3" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="24" style="variable" parent="1" vertex="1">
-      <pdLogicMask nodeName="d_word" as="value"/>
-      <mxGeometry x="590" y="200" width="90" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="25" value="" parent="1" source="6" target="24" edge="1">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="430" y="185"/>
-          <mxPoint x="430" y="230"/>
-        </Array>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="26" value="" parent="1" source="8" target="24" edge="1">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="430" y="270"/>
-          <mxPoint x="430" y="230"/>
-        </Array>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="27" style="variable" parent="1" vertex="1">
-      <pdLogicMask nodeName="prefix" as="value"/>
-      <mxGeometry x="590" y="80" width="70" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="28" value="" parent="1" source="4" target="27" edge="1">
+    <mxCell id="24" value="" edge="1" parent="1" source="22" target="13">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="29" style="variable" parent="1" vertex="1">
-      <pdLogicMask nodeName="postfix" as="value"/>
-      <mxGeometry x="590" y="430" width="80" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="30" value="" parent="1" source="12" target="29" edge="1">
+    <mxCell id="25" value="" edge="1" parent="1" source="23" target="13">
       <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="33" style="splitter" vertex="1" parent="1">
-      <Object nodeName="" as="value"/>
-      <mxGeometry x="90" y="380" width="65" height="21" as="geometry"/>
-    </mxCell>
-    <mxCell id="31" value="1" style="out_port" vertex="1" parent="33">
-      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="10" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="32" value="2" style="out_port" vertex="1" parent="33">
-      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="35" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="35" value="" edge="1" parent="1" source="11" target="33">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="130" y="355"/>
-          <mxPoint x="130" y="390"/>
-        </Array>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="36" value="" edge="1" parent="1" source="32" target="13">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="135" y="450"/>
-        </Array>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="37" value="" edge="1" parent="1" source="31" target="7">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="110" y="450"/>
-          <mxPoint x="20" y="450"/>
-          <mxPoint x="20" y="185"/>
-        </Array>
-      </mxGeometry>
     </mxCell>
   </root>
 </mxGraphModel>
@@ -313,7 +254,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 var vertex = graph.createVertex(parent, null, { nodeName: '*' }, 100, 20, 100, 50, pdVertexType.MASK);
                 pdFlow.CustomizeCell(vertex);
                 var v11 = graph.insertVertex(vertex, null, 'V', 1, 0, 20, 20, pdPortType.DATA);
-                v11.geometry.offset = new mxPoint(-10, 15);
+                v11.geometry.offset = new mxPoint(-10, -10);
                 v11.geometry.relative = true;
                 return vertex;
             }
@@ -323,14 +264,11 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
         $scope.createNewSplitter = function() {
 
             var create = function() {
-                var vertex = graph.createVertex(parent, null, { nodeName: '' }, 100, 20, 65, 20, pdVertexType.SPLITTER);
+                var vertex = graph.createVertex(parent, null, { nodeName: '' }, 100, 20, 65, 30, pdVertexType.SPLITTER);
                 pdFlow.CustomizeCell(vertex);
-                var v11 = graph.insertVertex(vertex, null, '1', 0, 1, 20, 20, pdPortType.OUT);
-                v11.geometry.offset = new mxPoint(10, -10);
-                v11.geometry.relative = true
-                var v12 = graph.insertVertex(vertex, null, '2', 0.0, 1, 20, 20, pdPortType.OUT);
-                v12.geometry.relative = true;
-                v12.geometry.offset = new mxPoint(35, -10);
+                vertex.AddNode();
+                vertex.AddNode();
+                vertex.AddNode();
                 return vertex;
             }
             insertVertex(create);
@@ -339,11 +277,9 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
         $scope.createNewVariable = function() {
 
             var create = function() {
-                var object = pdFlow.CreateValueByType(pdVertexType.VARIABLE);
-                object.nodeName = 'V';
-
-
-                var vertex = graph.createVertex(parent, null, object, 400, 200, 50, 50, pdVertexType.VARIABLE);
+                var vertex = graph.createVertex(parent, null, { nodeName: 'Zmienna' }, 400, 200, 50, 50, pdVertexType.VARIABLE);
+                pdFlow.CustomizeCell(vertex);
+                graph.cellSizeUpdated(vertex, false);
                 return vertex;
             }
             insertVertex(create);
@@ -451,7 +387,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var FindMatchingWays = function(char) {
                 for (var i = 0, l = possible_cells.length; i < l; i++) {
-                    if (possible_cells[i].value.Match(char))
+                    if (possible_cells[i].Match(char))
                         return possible_cells[i];
                 }
                 return null;
@@ -465,7 +401,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 if (other != null) {
                     ChangeCurrent(other);
                 } else {
-                    if (current_cell.value.Match == null || !current_cell.value.Match(c)) {
+                    if (current_cell.Match == null || !current_cell.Match(c)) {
                         result = 'Unexpected value at ' + dr.pos;
                         error = true;
                         break;

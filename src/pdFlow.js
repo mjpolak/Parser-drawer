@@ -43,27 +43,19 @@ var pdContainersVertex = [
     pdVertexType.NESTED,
 ]
 
-var pdLogicMask = function() {}
-
-pdLogicMask.prototype.Match = function(char) {
-    return this.nodeName == '*' || this.nodeName == char || (this.nodeName == ' ' && char == ' ');
-}
-
-var pdLogicVariable = function() {}
-
-pdLogicVariable.prototype.Append = function(char) {
-    return this.nodeName == '*' || this.nodeName == char || (this.nodeName == ' ' && char == ' ');
-}
-
-var pdLogicObjects = {}
-pdLogicObjects[pdVertexType.MASK] = pdLogicMask;
-pdLogicObjects[pdVertexType.VARIABLE] = pdLogicMask;
-
-
 var pdCellExtSplitter = function() {}
 var pdCellExtMask = function() {}
 var pdCellStart = function() {}
 var pdEndStart = function() {}
+var pdExtVariable = function() {}
+
+pdCellExtMask.prototype.Match = function(char) {
+    return this.value.nodeName == '*' || this.value.nodeName == char || (this.value.nodeName == ' ' && char == ' ');
+}
+
+pdExtVariable.prototype.Append = function(char) {
+return this.value.nodeName == '*' || this.value.nodeName == char || (this.value.nodeName == ' ' && char == ' ');
+}
 
 pdCellExtSplitter.prototype.GetPossibleCells = function() {
     if (this.children == null)
@@ -72,6 +64,39 @@ pdCellExtSplitter.prototype.GetPossibleCells = function() {
         .filter(x => x != null && x.GetPossibleCells != null).reduce((t, x) => t.concat(x.GetPossibleCells()), []);
     return options;
 }
+
+pdCellExtSplitter.prototype.AddNode =function()
+{
+    var child_count = this.children == null ? 0 : this.children.length
+    this.geometry.width = 15+(child_count+1)*25;
+    graph.refresh();
+    var v11 = graph.insertVertex(this, null, ''+(child_count+1), 0, 1, 20, 20, pdPortType.OUT,true);
+    v11.geometry.offset = new mxPoint(10+(25*(child_count)), -10);
+    graph.refresh();
+}
+
+pdCellExtSplitter.prototype.RemoveNode = function()
+{
+    this.geometry.width-=25;
+    graph.getModel().remove(this.children[this.children.length-1]);
+    graph.refresh();
+}
+
+pdCellExtSplitter.prototype.FillMenu = function(menu)
+{
+    var cell = this;
+    menu.addItem('Add node', null, function(){
+            cell.AddNode();
+        });
+    if(this.children.length > 2)
+    {
+        menu.addItem('Remove node', null, function()
+        {
+        cell.RemoveNode();
+        });
+    }
+}
+
 
 pdCellExtMask.prototype.GetPossibleCells = function() {
     return [this];
@@ -90,6 +115,7 @@ pdCellExtensionObjects[pdVertexType.SPLITTER] = pdCellExtSplitter;
 pdCellExtensionObjects[pdVertexType.MASK] = pdCellExtMask;
 pdCellExtensionObjects[pdVertexType.START] = pdCellStart;
 pdCellExtensionObjects[pdVertexType.END] = pdEndStart;
+pdCellExtensionObjects[pdVertexType.VARIABLE] =pdExtVariable;
 
 var pdCloner = {
     clone: function() {
@@ -98,23 +124,11 @@ var pdCloner = {
 }
 
 var pdFlow = {
-    /*CreateValueByType: function(type) {
-        var logicObj = pdLogicObjects[type];
-        if (logicObj != null) {
-            var obj = new logicObj();
-            Object.assign(obj, pdCloner);
-            return obj;
-        }
-        return {}
-    },*/
     CustomizeCell: function(cell) {
         if (cell.style == null)
             return;
-        var logicObj = pdLogicObjects[cell.style];
+        Object.assign(cell.value, pdCloner);
         var cellObj = pdCellExtensionObjects[cell.style];
-        if (logicObj != null) {
-            Object.assign(cell.value, logicObj.prototype, pdCloner);
-        }
         if (cellObj != null) {
             Object.assign(cell, cellObj.prototype);
         }
