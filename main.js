@@ -132,11 +132,10 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             this.xml = mxUtils.getPrettyXml(node);
         }
 
-        $scope.rotRight = function()
-        {
+        $scope.rotRight = function() {
             var cell = graph.getSelectionCell();
             var vertexHandler = graph.createHandler(graph.view.getState(cell));
-            vertexHandler.rotateCell(cell,90);
+            vertexHandler.rotateCell(cell, 90);
             vertexHandler.destroy();
             graph.refresh();
         }
@@ -168,12 +167,13 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             var cells = Object.keys(model.cells).map(function(x) { return model.cells[x] });
             cells.forEach(function(element) {
                 var type = element.pdType;
-                if ( type == null && element.style!=null )
-                {
+                if (type == null && element.style != null) {
                     type = element.style.split(';')[0];
                 }
-                pdFlow.CustomizeCell(element,type)
+                pdFlow.CustomizeCell(element, type)
             }, this);
+
+            graph.refresh();
         }
 
 
@@ -276,9 +276,9 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var create = function() {
                 var vertex = graph.createVertex(parent, null, { nodeName: '*' }, 100, 20, 100, 50, pdVertexType.MASK);
-                pdFlow.CustomizeCell(vertex,pdVertexType.MASK);
+                pdFlow.CustomizeCell(vertex, pdVertexType.MASK);
                 var v11 = graph.insertVertex(vertex, null, 'V', 1, 0, 20, 20, pdPortType.DATA);
-                pdFlow.CustomizeCell(v11,pdPortType.DATA)
+                pdFlow.CustomizeCell(v11, pdPortType.DATA)
                 v11.geometry.offset = new mxPoint(-10, -10);
                 v11.geometry.relative = true;
                 return vertex;
@@ -290,7 +290,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var create = function() {
                 var vertex = graph.createVertex(parent, null, { nodeName: '' }, 100, 20, 65, 30, pdVertexType.SPLITTER);
-                pdFlow.CustomizeCell(vertex,pdVertexType.SPLITTER);
+                pdFlow.CustomizeCell(vertex, pdVertexType.SPLITTER);
                 vertex.AddNode();
                 vertex.AddNode();
                 vertex.AddNode();
@@ -303,7 +303,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var create = function() {
                 var vertex = graph.createVertex(parent, null, { nodeName: 'Zmienna' }, 400, 200, 50, 50, pdVertexType.VARIABLE);
-                pdFlow.CustomizeCell(vertex,pdVertexType.VARIABLE);
+                pdFlow.CustomizeCell(vertex, pdVertexType.VARIABLE);
                 graph.cellSizeUpdated(vertex, false);
                 return vertex;
             }
@@ -395,88 +395,80 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             var dr = new DataReader();
 
             var possible_cells = [];
-            var consume=[];
+            var consume = [];
             var buffer = '';
             var ChangeCurrent = function(cell) {
 
                 current_cell = cell;
 
                 var edges = current_cell.edges.filter(x => x.source == current_cell);
-                if (edges.length > 0 && edges[0].target.GetPossibleCells != null)
-                {
+                if (edges.length > 0 && edges[0].target.GetPossibleCells != null) {
                     possible_cells = edges[0].target.GetPossibleCells();
-                    consume = possible_cells.map(x=>0);
-                }
-                else
+                    consume = possible_cells.map(x => 0);
+                } else
                     possible_cells = [];
             }
 
-            var AddToVariables = function(text)
-            {
-                    if (current_cell.children != null) {
-                        var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.pdType));
-                        data_sources.forEach(function(element) {
-                            if (element.edges) {
-                                var targets = element.edges.map(x => x.target);
-                                targets.forEach(function(element) {
-                                    variables[element.value.nodeName] += text;
-                                }, this);
-                            }
-                        }, this);
-                    }
+            var AddToVariables = function(text) {
+                if (current_cell.children != null) {
+                    var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.pdType));
+                    data_sources.forEach(function(element) {
+                        if (element.edges) {
+                            var targets = element.edges.map(x => x.target);
+                            targets.forEach(function(element) {
+                                variables[element.value.nodeName] += text;
+                            }, this);
+                        }
+                    }, this);
+                }
             }
 
             ChangeCurrent(start_cell);
 
             var error = false;
-            var result={};
+            var result = {};
 
-            var Step = function(end)
-            {
-                possible_cells.forEach(function(element,idx) {
-                    if(consume[idx]==0)
-                    {
-                        if(element.Match(buffer))
-                        {
+            var Step = function(end) {
+                possible_cells.forEach(function(element, idx) {
+                    if (consume[idx] == 0) {
+                        if (element.Match(buffer)) {
                             consume[idx] = buffer.length;
                         } else {
-                            if(!element.PartialMatch(buffer))
+                            if (!element.PartialMatch(buffer))
                                 consume[idx] = -1;
                         }
-                    } 
+                    }
                 }, this);
 
-                var all_check = !consume.some(x=>x==0);
-                
-                if( all_check || end)
-                {
-                    var next_id = consume.findIndex(x=>x>0);
+                var all_check = !consume.some(x => x == 0);
+
+                if (all_check || end) {
+                    var next_id = consume.findIndex(x => x > 0);
                     if (next_id >= 0) {
                         var other = possible_cells[next_id];
                         var to_skip = consume[next_id];
-                        var rest = buffer.substring(0,to_skip);
-                        var temp_buffer = buffer.substr(to_skip,buffer.length-to_skip);
-                        
+                        var rest = buffer.substring(0, to_skip);
+                        var temp_buffer = buffer.substr(to_skip, buffer.length - to_skip);
+
                         var len = temp_buffer.length;
                         ChangeCurrent(other);
 
                         AddToVariables(rest);
 
                         buffer = '';
-                        for(var i=0;i<len;i++)
-                        {
-                            buffer+=temp_buffer[i];
+                        for (var i = 0; i < len; i++) {
+                            buffer += temp_buffer[i];
                             var res = Step(end);
-                            if( res.error != null)
+                            if (res.error != null)
                                 return res;
                         }
 
                     } else {
                         if (current_cell.Match == null || !current_cell.Match(buffer)) {
-                            return {message:'Unexpected value at ' + dr.pos,error:true}
+                            return { message: 'Unexpected value at ' + dr.pos, error: true }
                         }
                         AddToVariables(buffer);
-                        consume = possible_cells.map(x=>0);
+                        consume = possible_cells.map(x => 0);
                         buffer = '';
                     }
 
@@ -487,9 +479,9 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             }
 
             while ((c = dr.Next()) != null) {
-                buffer+=c;
+                buffer += c;
                 result = Step();
-                if(result.error != null)
+                if (result.error != null)
                     break;
             }
             Step(true);
