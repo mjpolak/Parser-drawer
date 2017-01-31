@@ -62,7 +62,7 @@ return this.value.nodeName == '*' || this.value.nodeName == char || (this.value.
 }
 
 pdEndStart.prototype.Match = function(char) {
-    return char =='\0';
+    return false;
 }
 
 pdEndStart.prototype.PartialMatch = function(string) {

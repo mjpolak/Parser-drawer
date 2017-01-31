@@ -90,23 +90,24 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
         <Array as="points"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="42" style="mask" vertex="1" parent="1">
+    <mxCell id="42" style="mask" parent="1" vertex="1">
       <Object nodeName="*" as="value"/>
       <mxGeometry x="164" y="463" width="100" height="50" as="geometry"/>
     </mxCell>
-    <mxCell id="41" value="V" style="data_port" vertex="1" parent="42">
+    <mxCell id="41" value="V" style="data_port" parent="42" vertex="1">
       <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="-10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="43" value="" edge="1" parent="1" source="42" target="3">
+    <mxCell id="43" value="" parent="1" source="42" target="3" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="44" value="" edge="1" parent="1" source="41" target="38">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
   </root>
-</mxGraphModel>
-
-`;
-        $scope.test_cases = "marc";
+</mxGraphModel>`;
+        $scope.test_cases = "marci";
         $scope.json_result = "";
         $scope.zoomIn = function() {
             graph.zoomIn();
@@ -405,12 +406,27 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                     possible_cells = [];
             }
 
+            var AddToVariables = function(text)
+            {
+                    if (current_cell.children != null) {
+                        var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.style));
+                        data_sources.forEach(function(element) {
+                            if (element.edges) {
+                                var targets = element.edges.map(x => x.target);
+                                targets.forEach(function(element) {
+                                    variables[element.value.nodeName] += text;
+                                }, this);
+                            }
+                        }, this);
+                    }
+            }
+
             ChangeCurrent(start_cell);
 
             var error = false;
             var result={};
 
-            var Step = function()
+            var Step = function(end)
             {
                 possible_cells.forEach(function(element,idx) {
                     if(consume[idx]==0)
@@ -426,10 +442,10 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 }, this);
 
                 var all_check = !consume.some(x=>x==0);
-                if( all_check)
+                
+                if( all_check || end)
                 {
                     var next_id = consume.findIndex(x=>x>0);
-
                     if (next_id >= 0) {
                         var other = possible_cells[next_id];
                         var to_skip = consume[next_id];
@@ -439,32 +455,24 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                         var len = temp_buffer.length;
                         ChangeCurrent(other);
 
+                        AddToVariables(rest);
 
-                        if (current_cell.children != null) {
-                            var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.style));
-                            data_sources.forEach(function(element) {
-                                if (element.edges) {
-                                    var targets = element.edges.map(x => x.target);
-                                    targets.forEach(function(element) {
-                                        variables[element.value.nodeName] += rest;
-                                    }, this);
-                                }
-                            }, this);
-                        }
                         buffer = '';
                         for(var i=0;i<len;i++)
                         {
                             buffer+=temp_buffer[i];
-                            var res = Step();
+                            var res = Step(end);
                             if( res.error != null)
                                 return res;
                         }
 
                     } else {
-                        if (current_cell.Match == null || !current_cell.Match(c)) {
+                        if (current_cell.Match == null || !current_cell.Match(buffer)) {
                             return {message:'Unexpected value at ' + dr.pos,error:true}
                         }
+                        AddToVariables(buffer);
                     }
+
 
 
                 }
@@ -477,11 +485,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 if(result.error != null)
                     break;
             }
-            if( result.error != true)
-            {
-                buffer+='\0'
-                result = Step();
-            }
+            Step(true);
 
             if (result.error) {
                 $scope.json_result = result.message;
