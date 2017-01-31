@@ -132,6 +132,15 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             this.xml = mxUtils.getPrettyXml(node);
         }
 
+        $scope.rotRight = function()
+        {
+            var cell = graph.getSelectionCell();
+            var vertexHandler = graph.createHandler(graph.view.getState(cell));
+            vertexHandler.rotateCell(cell,90);
+            vertexHandler.destroy();
+            graph.refresh();
+        }
+
         $scope.fromXML = function() {
             var doc = mxUtils.parseXml(this.xml);
             var codec = new mxCodec(doc);
@@ -161,6 +170,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 pdFlow.CustomizeCell(element)
             }, this);
         }
+
 
         $scope.fromXML();
 
