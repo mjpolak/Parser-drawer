@@ -93,8 +93,8 @@ mxRubberband.prototype.mouseUp = function(sender, me) {
 
 mxGraph.prototype.isValidDropTarget = function(cell, cells, evt) {
 
-    return cell.style != null && pdContainersVertex.includes(cell.style) && !cells.some(function(x) {
-        return x.style == pdVertexType.START || x.style == pdVertexType.END
+    return cell.pdType != null && pdContainersVertex.includes(cell.pdType) && !cells.some(function(x) {
+        return x.pdType == pdVertexType.START || x.pdType == pdVertexType.END
     });
 }
 
@@ -111,7 +111,7 @@ mxGraph.prototype.isValidEnding = function(cell) {
 var previous = graph.model.getStyle;
 
 graph.model.getStyle = function(cell) {
-    if (cell != null && cell.source != null && cell.source.style == pdPortType.DATA) {
+    if (cell != null && cell.source != null && cell.source.pdType == pdPortType.DATA) {
         return pdEdgeType.VARIABLE;
     } else {
         return previous.apply(this, arguments)
@@ -119,10 +119,10 @@ graph.model.getStyle = function(cell) {
 }
 
 mxGraph.prototype.isValidSource = function(cell) {
-    if (cell != null && cell.style) {
-        if (!pdSourcesVertex.includes(cell.style) && cell.style != pdPortType.DATA)
+    if (cell != null && cell.pdType) {
+        if (!pdSourcesVertex.includes(cell.pdType) && cell.pdType != pdPortType.DATA)
             return false;
-        if (pdSourcesVertex.includes(cell.style) && cell.edges != null && cell.edges.some(x => x.source == cell && x.target != null))
+        if (pdSourcesVertex.includes(cell.pdType) && cell.edges != null && cell.edges.some(x => x.source == cell && x.target != null))
             return false;
     }
 
@@ -130,7 +130,7 @@ mxGraph.prototype.isValidSource = function(cell) {
 }
 
 mxGraph.prototype.isValidTarget = function(cell) {
-    if (cell == null || cell.style == null || !(pdTargetVertex.includes(cell.style) || pdDataTargets.includes(cell.style)))
+    if (cell == null || cell.pdType == null || !(pdTargetVertex.includes(cell.pdType) || pdDataTargets.includes(cell.pdType)))
         return false;
     return this.isValidEnding(cell);
 }
@@ -138,28 +138,28 @@ mxGraph.prototype.isValidConnection = function(source, target) {
 
     // variable port to variables
     if (source != null && target != null) {
-        var is_data_source = pdDataSources.includes(source.style);
-        var id_data_target = pdDataTargets.includes(target.style);
+        var is_data_source = pdDataSources.includes(source.pdType);
+        var id_data_target = pdDataTargets.includes(target.pdType);
 
 
 
         if (is_data_source != id_data_target)
             return false;
 
-        if (source.style == pdVertexType.START && target.style == pdVertexType.END)
+        if (source.pdType == pdVertexType.START && target.pdType == pdVertexType.END)
             return false;
     }
     return this.oldisValidConnection(source, target);
 }
 graph.validateEdge = function(edge, source, target) {
 
-    if (!pdSourcesVertex.includes(source.style) && !pdDataSources.includes(source.style))
+    if (!pdSourcesVertex.includes(source.pdType) && !pdDataSources.includes(source.pdType))
         return 'Cannot be source';
-    if (!pdTargetVertex.includes(target.style) && !pdDataTargets.includes(target.style))
+    if (!pdTargetVertex.includes(target.pdType) && !pdDataTargets.includes(target.pdType))
         return 'Cannot be target';
 
-    var is_data_source = pdDataSources.includes(source.style);
-    var id_data_target = pdDataTargets.includes(target.style);
+    var is_data_source = pdDataSources.includes(source.pdType);
+    var id_data_target = pdDataTargets.includes(target.pdType);
     // console.log("TEST:");
     // console.log(is_data_source);
     // console.log(id_data_target);
@@ -188,6 +188,16 @@ edgeStyle[mxConstants.STYLE_STROKECOLOR] = '#000';
 var dataEdgeStyle = angular.copy(edgeStyle);
 dataEdgeStyle[mxConstants.STYLE_STROKECOLOR] = 'lightblue';
 graph.getStylesheet().putCellStyle(pdEdgeType.VARIABLE, dataEdgeStyle);
+
+var core_getStyle = mxGraphModel.prototype.getStyle;
+mxGraphModel.prototype.getStyle = function(cell)
+{
+    if(cell.edge != null && cell.edge == 1 )
+    {
+        return pdEdgeType.VARIABLE;
+    }
+    return core_getStyle.apply(this,arguments);
+}
 
 function StartShape() {
     mxDoubleEllipse.call(this);
@@ -416,7 +426,7 @@ graph.getStylesheet().putCellStyle(pdVertexType.NESTED, nested);
 				};
 graph.getAllConnectionConstraints = function(terminal)
 {
-    if (terminal.cell != null && terminal.cell.style != null && terminal.cell.style == pdVertexType.SPLITTER)
+    if (terminal.cell != null && terminal.cell.pdType != null && terminal.cell.pdType == pdVertexType.SPLITTER)
     {
         return [new mxConnectionConstraint(new mxPoint(0.5, 0))];
     }

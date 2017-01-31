@@ -84,6 +84,7 @@ pdCellExtSplitter.prototype.AddNode =function()
     this.geometry.width = 15+(child_count+1)*25;
     graph.refresh();
     var v11 = graph.insertVertex(this, null, ''+(child_count+1), 0, 1, 20, 20, pdPortType.OUT,true);
+    pdFlow.CustomizeCell(v11,pdPortType.OUT);
     v11.geometry.offset = new mxPoint(10+(25*(child_count)), -10);
     graph.refresh();
 }
@@ -137,13 +138,18 @@ var pdCloner = {
 }
 
 var pdFlow = {
-    CustomizeCell: function(cell) {
-        if (cell.style == null)
+    CustomizeCell: function(cell,style) {
+        if (style == null)
+        {
+            //alert('pdFlow.CustomizeCell style required')
             return;
+        }
         Object.assign(cell.value, pdCloner);
-        var cellObj = pdCellExtensionObjects[cell.style];
+        var cellObj = pdCellExtensionObjects[style];
         if (cellObj != null) {
             Object.assign(cell, cellObj.prototype);
+            
         }
+        cell.pdType = style;
     }
 }

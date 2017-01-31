@@ -151,13 +151,13 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             var data = graph.getChildVertices();
 
             data.forEach(function(element) {
-                if (element.style == pdVertexType.START) {
+                if (element.pdType == pdVertexType.START) {
                     if (start)
                         graph.getModel().remove(element);
                     else
                         start = true;
                 }
-                if (element.style == pdVertexType.END) {
+                if (element.pdType == pdVertexType.END) {
                     if (end)
                         graph.getModel().remove(element);
                     else
@@ -167,7 +167,12 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var cells = Object.keys(model.cells).map(function(x) { return model.cells[x] });
             cells.forEach(function(element) {
-                pdFlow.CustomizeCell(element)
+                var type = element.pdType;
+                if ( type == null && element.style!=null )
+                {
+                    type = element.style.split(';')[0];
+                }
+                pdFlow.CustomizeCell(element,type)
             }, this);
         }
 
@@ -271,8 +276,9 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var create = function() {
                 var vertex = graph.createVertex(parent, null, { nodeName: '*' }, 100, 20, 100, 50, pdVertexType.MASK);
-                pdFlow.CustomizeCell(vertex);
+                pdFlow.CustomizeCell(vertex,pdVertexType.MASK);
                 var v11 = graph.insertVertex(vertex, null, 'V', 1, 0, 20, 20, pdPortType.DATA);
+                pdFlow.CustomizeCell(v11,pdPortType.DATA)
                 v11.geometry.offset = new mxPoint(-10, -10);
                 v11.geometry.relative = true;
                 return vertex;
@@ -284,7 +290,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var create = function() {
                 var vertex = graph.createVertex(parent, null, { nodeName: '' }, 100, 20, 65, 30, pdVertexType.SPLITTER);
-                pdFlow.CustomizeCell(vertex);
+                pdFlow.CustomizeCell(vertex,pdVertexType.SPLITTER);
                 vertex.AddNode();
                 vertex.AddNode();
                 vertex.AddNode();
@@ -297,7 +303,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             var create = function() {
                 var vertex = graph.createVertex(parent, null, { nodeName: 'Zmienna' }, 400, 200, 50, 50, pdVertexType.VARIABLE);
-                pdFlow.CustomizeCell(vertex);
+                pdFlow.CustomizeCell(vertex,pdVertexType.VARIABLE);
                 graph.cellSizeUpdated(vertex, false);
                 return vertex;
             }
@@ -371,7 +377,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             var variables = {};
 
             all_cells.forEach(function(element) {
-                switch (element.style) {
+                switch (element.pdType) {
                     case pdVertexType.START:
                         start_cell = element;
                         break;
@@ -408,7 +414,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
             var AddToVariables = function(text)
             {
                     if (current_cell.children != null) {
-                        var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.style));
+                        var data_sources = current_cell.children.filter((x) => pdDataSources.includes(x.pdType));
                         data_sources.forEach(function(element) {
                             if (element.edges) {
                                 var targets = element.edges.map(x => x.target);
