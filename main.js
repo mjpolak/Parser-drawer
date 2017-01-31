@@ -5,109 +5,98 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
     <mxCell id="2" value="start" style="start" parent="1" vertex="1">
-      <mxGeometry x="90" y="10" width="35" height="35" as="geometry"/>
+      <mxGeometry x="-231" y="-324" width="35" height="35" as="geometry"/>
     </mxCell>
     <mxCell id="3" value="koniec" style="end" parent="1" vertex="1">
       <mxGeometry x="200" y="540" width="35" height="35" as="geometry"/>
     </mxCell>
-    <mxCell id="28" style="splitter" parent="1" vertex="1">
-      <Object nodeName="" as="value"/>
-      <mxGeometry x="170" y="130" width="65" height="30" as="geometry"/>
+    <mxCell id="58" style="mask" vertex="1" parent="1">
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="-190" y="-165" width="100" height="50" as="geometry"/>
     </mxCell>
-    <mxCell id="25" value="1" style="out_port" parent="28" vertex="1">
+    <mxCell id="57" value="V" style="data_port" vertex="1" parent="58">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="60" style="mask" vertex="1" parent="1">
+      <Object nodeName="&lt;" as="value"/>
+      <mxGeometry x="-188" y="-76" width="98" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="59" value="V" style="data_port" vertex="1" parent="60">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="62" value="" edge="1" parent="1" source="58" target="60">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="64" style="mask" vertex="1" parent="1">
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="40" y="-74" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="63" value="V" style="data_port" vertex="1" parent="64">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="65" value="" edge="1" parent="1" source="60" target="64">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="67" style="mask" vertex="1" parent="1">
+      <Object nodeName=" " as="value"/>
+      <mxGeometry x="40" y="39" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="66" value="V" style="data_port" vertex="1" parent="67">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="68" value="" edge="1" parent="1" source="64" target="67">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="69" style="variable" vertex="1" parent="1">
+      <Object nodeName="tag" as="value"/>
+      <mxGeometry x="404" y="-88" width="50" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="70" value="" edge="1" parent="1" source="63" target="69">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="71" value="" edge="1" parent="1" source="67" target="3">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="75" style="splitter" vertex="1" parent="1">
+      <Object nodeName="" as="value"/>
+      <mxGeometry x="-270" y="-220" width="90" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="72" value="1" style="out_port" vertex="1" parent="75">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="26" value="2" style="out_port" parent="28" vertex="1">
+    <mxCell id="73" value="2" style="out_port" vertex="1" parent="75">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="35" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="29" value="" style="entryX=0.5;entryY=0;" parent="1" source="2" target="28" edge="1">
+    <mxCell id="74" value="3" style="out_port" vertex="1" parent="75">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="60" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="76" value="" edge="1" parent="1" source="72" target="60">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="31" style="mask" parent="1" vertex="1">
-      <Object nodeName="marcin" as="value"/>
-      <mxGeometry x="40" y="250" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="30" value="V" style="data_port" parent="31" vertex="1">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="32" value="" parent="1" source="25" target="31" edge="1">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="190" y="200"/>
-          <mxPoint x="90" y="200"/>
-        </Array>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="34" style="mask" parent="1" vertex="1">
-      <Object nodeName="mar" as="value"/>
-      <mxGeometry x="300" y="260" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="33" value="V" style="data_port" parent="34" vertex="1">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="35" value="" parent="1" source="26" target="34" edge="1">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="215" y="200"/>
-          <mxPoint x="350" y="200"/>
-        </Array>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="36" value="" parent="1" source="34" target="42" edge="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="282" y="290" as="sourcePoint"/>
-        <mxPoint x="210" y="370" as="targetPoint"/>
-        <Array as="points">
-          <mxPoint x="350" y="488"/>
-        </Array>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="37" value="" parent="1" source="31" target="42" edge="1">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="90" y="488"/>
-        </Array>
-        <mxPoint x="170" y="440" as="targetPoint"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="38" style="variable" parent="1" vertex="1">
-      <Object nodeName="Zmienna" as="value"/>
-      <mxGeometry x="190" y="200" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="39" value="" parent="1" source="33" target="38" edge="1">
+    <mxCell id="77" value="" edge="1" parent="1" source="73" target="58">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="40" value="" parent="1" source="30" target="38" edge="1">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="42" style="mask" parent="1" vertex="1">
-      <Object nodeName="*" as="value"/>
-      <mxGeometry x="164" y="463" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="41" value="V" style="data_port" parent="42" vertex="1">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="43" value="" parent="1" source="42" target="3" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="44" value="" edge="1" parent="1" source="41" target="38">
+    <mxCell id="78" value="" style="entryX=0.5;entryY=0;" edge="1" parent="1" source="2" target="75">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
   </root>
-</mxGraphModel>`;
-        $scope.test_cases = "marci";
+</mxGraphModel>
+`;
+        $scope.test_cases = `x<test arg="5"></test>`;
         $scope.json_result = "";
         $scope.zoomIn = function() {
             graph.zoomIn();
@@ -471,6 +460,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                             return {message:'Unexpected value at ' + dr.pos,error:true}
                         }
                         AddToVariables(buffer);
+                        consume = possible_cells.map(x=>0);
                         buffer = '';
                     }
 
