@@ -471,6 +471,7 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                             return {message:'Unexpected value at ' + dr.pos,error:true}
                         }
                         AddToVariables(buffer);
+                        buffer = '';
                     }
 
 
