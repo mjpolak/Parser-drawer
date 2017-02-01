@@ -4,99 +4,240 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
   <root>
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
-    <mxCell id="2" value="start" style="start" parent="1" vertex="1">
-      <mxGeometry x="-231" y="-324" width="35" height="35" as="geometry"/>
+    <mxCell id="2" value="start" style="start" parent="1" vertex="1" pdType="start">
+      <mxGeometry x="-516" y="-316" width="35" height="35" as="geometry"/>
     </mxCell>
-    <mxCell id="3" value="koniec" style="end" parent="1" vertex="1">
+    <mxCell id="3" value="koniec" style="end" parent="1" vertex="1" pdType="end">
       <mxGeometry x="200" y="540" width="35" height="35" as="geometry"/>
     </mxCell>
-    <mxCell id="58" style="mask" vertex="1" parent="1">
-      <Object nodeName="*" as="value"/>
-      <mxGeometry x="-190" y="-165" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="57" value="V" style="data_port" vertex="1" parent="58">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="60" style="mask" vertex="1" parent="1">
-      <Object nodeName="&lt;" as="value"/>
-      <mxGeometry x="-188" y="-76" width="98" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="59" value="V" style="data_port" vertex="1" parent="60">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="62" value="" edge="1" parent="1" source="58" target="60">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="64" style="mask" vertex="1" parent="1">
-      <Object nodeName="*" as="value"/>
-      <mxGeometry x="40" y="-74" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="63" value="V" style="data_port" vertex="1" parent="64">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="65" value="" edge="1" parent="1" source="60" target="64">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="67" style="mask" vertex="1" parent="1">
-      <Object nodeName=" " as="value"/>
-      <mxGeometry x="40" y="39" width="100" height="50" as="geometry"/>
-    </mxCell>
-    <mxCell id="66" value="V" style="data_port" vertex="1" parent="67">
-      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="-10" y="-10" as="offset"/>
-      </mxGeometry>
-    </mxCell>
-    <mxCell id="68" value="" edge="1" parent="1" source="64" target="67">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="69" style="variable" vertex="1" parent="1">
+    <mxCell id="69" style="variable" parent="1" vertex="1" pdType="variable">
       <Object nodeName="tag" as="value"/>
-      <mxGeometry x="404" y="-88" width="50" height="50" as="geometry"/>
+      <mxGeometry x="-291" y="-10" width="50" height="50" as="geometry"/>
     </mxCell>
-    <mxCell id="70" value="" edge="1" parent="1" source="63" target="69">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="71" value="" edge="1" parent="1" source="67" target="3">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="75" style="splitter" vertex="1" parent="1">
+    <mxCell id="75" style="splitter" parent="1" vertex="1" pdType="splitter">
       <Object nodeName="" as="value"/>
-      <mxGeometry x="-270" y="-220" width="90" height="30" as="geometry"/>
+      <mxGeometry x="-423" y="-244" width="65" height="30" as="geometry"/>
     </mxCell>
-    <mxCell id="72" value="1" style="out_port" vertex="1" parent="75">
+    <mxCell id="72" value="1" style="out_port" parent="75" vertex="1" pdType="out_port">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="73" value="2" style="out_port" vertex="1" parent="75">
+    <mxCell id="73" value="2" style="out_port" parent="75" vertex="1" pdType="out_port">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
         <mxPoint x="35" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
-    <mxCell id="74" value="3" style="out_port" vertex="1" parent="75">
-      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="60" y="-10" as="offset"/>
+    <mxCell id="76" value="" parent="1" source="72" target="60" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="77" value="" parent="1" source="73" target="58" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="-230" y="-190" as="targetPoint"/>
+        <Array as="points">
+          <mxPoint x="-377" y="-180"/>
+          <mxPoint x="-235" y="-180"/>
+        </Array>
       </mxGeometry>
     </mxCell>
-    <mxCell id="76" value="" edge="1" parent="1" source="72" target="60">
+    <mxCell id="78" value="" style="entryX=0.5;entryY=0;" parent="1" source="2" target="75" edge="1" pdType="entryX=0.5">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="77" value="" edge="1" parent="1" source="73" target="58">
+    <mxCell id="79" style="nested" vertex="1" pdType="nested" parent="1">
+      <Object nodeName="argumenty" as="value"/>
+      <mxGeometry x="-521" y="98" width="651" height="362" as="geometry"/>
+    </mxCell>
+    <mxCell id="82" style="mask" vertex="1" pdType="mask" parent="79">
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="32" y="43" width="166" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="81" value="V" style="data_port" vertex="1" parent="82" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="84" style="variable" vertex="1" pdType="variable" parent="79">
+      <Object nodeName="arg_name" as="value"/>
+      <mxGeometry x="249" y="25" width="110" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="85" value="" edge="1" parent="79" source="81" target="84">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="78" value="" style="entryX=0.5;entryY=0;" edge="1" parent="1" source="2" target="75">
+    <mxCell id="87" style="mask" vertex="1" pdType="mask" parent="79">
+      <Object nodeName="=&quot;" as="value"/>
+      <mxGeometry x="71" y="132" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="86" value="V" style="data_port" vertex="1" parent="87" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="88" value="" edge="1" parent="79" source="82" target="87">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="90" style="mask" vertex="1" pdType="mask" parent="79">
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="232" y="133" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="89" value="V" style="data_port" vertex="1" parent="90" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="91" value="" edge="1" parent="79" source="87" target="90">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="93" style="mask" vertex="1" pdType="mask" parent="79">
+      <Object nodeName="&quot;" as="value"/>
+      <mxGeometry x="391" y="142" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="92" value="V" style="data_port" vertex="1" parent="93" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="94" value="" edge="1" parent="79" source="90" target="93">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="100" style="splitter" vertex="1" pdType="splitter" parent="79">
+      <Object nodeName="" as="value"/>
+      <mxGeometry x="411" y="224" width="65" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="97" value="1" style="out_port" vertex="1" parent="100" pdType="out_port">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="98" value="2" style="out_port" vertex="1" parent="100" pdType="out_port">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="35" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="101" value="" style="entryX=0.5;entryY=0;" edge="1" parent="79" source="93" target="100">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="105" style="mask" vertex="1" pdType="mask" parent="79">
+      <Object nodeName=" " as="value"/>
+      <mxGeometry x="260" y="265" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="104" value="V" style="data_port" vertex="1" parent="105" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="106" value="" edge="1" parent="79" source="98" target="105">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="118" style="splitter" vertex="1" pdType="splitter" parent="79">
+      <Object nodeName="" as="value"/>
+      <mxGeometry x="125" y="303" width="65" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="115" value="1" style="out_port" vertex="1" parent="118" pdType="out_port">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="116" value="2" style="out_port" vertex="1" parent="118" pdType="out_port">
+      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="35" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="119" value="" style="entryX=0.5;entryY=0;" edge="1" parent="79" source="105" target="118">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="120" value="" edge="1" parent="79" source="115" target="82">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="145" y="353"/>
+          <mxPoint x="51" y="353"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="122" style="variable" vertex="1" pdType="variable" parent="79">
+      <Object nodeName="arg_value" as="value"/>
+      <mxGeometry x="390" y="64" width="110" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="123" value="" edge="1" parent="79" source="89" target="122">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="332" y="92"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="58" style="mask" parent="1" vertex="1" pdType="mask">
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="-304" y="-143" width="140" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="57" value="V" style="data_port" parent="58" vertex="1" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="62" value="" parent="1" source="58" target="60" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="60" style="mask" parent="1" vertex="1" pdType="mask">
+      <Object nodeName="&lt;" as="value"/>
+      <mxGeometry x="-581" y="-69" width="108" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="59" value="V" style="data_port" parent="60" vertex="1" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="65" value="" parent="1" source="60" target="64" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="64" style="mask" parent="1" vertex="1" pdType="mask">
+      <Object nodeName="*" as="value"/>
+      <mxGeometry x="-750" y="17" width="108" height="55" as="geometry"/>
+    </mxCell>
+    <mxCell id="63" value="V" style="data_port" parent="64" vertex="1" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="68" value="" parent="1" source="64" target="67" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="80" value="" edge="1" parent="1" source="63" target="69">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="67" style="mask" parent="1" vertex="1" pdType="mask">
+      <Object nodeName=" " as="value"/>
+      <mxGeometry x="-667" y="120" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="66" value="V" style="data_port" parent="67" vertex="1" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="83" value="" edge="1" parent="1" source="67" target="82">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="96" style="mask" vertex="1" pdType="mask" parent="1">
+      <Object nodeName="&gt;" as="value"/>
+      <mxGeometry x="-142" y="525" width="100" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="95" value="V" style="data_port" vertex="1" parent="96" pdType="data_port">
+      <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="102" value="" edge="1" parent="1" source="97" target="96">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="103" value="" edge="1" parent="1" source="96" target="3">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="121" value="" edge="1" parent="1" source="116" target="96">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
   </root>
 </mxGraphModel>
+
 `;
-        $scope.test_cases = `x<test arg="5"></test>`;
+        $scope.test_cases = `x<test arg="5" arg2="4">`;
         $scope.json_result = "";
         $scope.zoomIn = function() {
             graph.zoomIn();
@@ -174,6 +315,8 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 }
                 pdFlow.CustomizeCell(element,type)
             }, this);
+
+            graph.refresh();
         }
 
 
@@ -305,6 +448,16 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
                 var vertex = graph.createVertex(parent, null, { nodeName: 'Zmienna' }, 400, 200, 50, 50, pdVertexType.VARIABLE);
                 pdFlow.CustomizeCell(vertex,pdVertexType.VARIABLE);
                 graph.cellSizeUpdated(vertex, false);
+                return vertex;
+            }
+            insertVertex(create);
+        }
+
+        $scope.createNewNested = function() {
+
+            var create = function() {
+                var vertex = graph.createVertex(parent, null, { nodeName: 'Nested' }, 400, 200, 50, 50, pdVertexType.NESTED);
+                pdFlow.CustomizeCell(vertex,pdVertexType.NESTED);
                 return vertex;
             }
             insertVertex(create);

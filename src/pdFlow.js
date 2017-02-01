@@ -48,6 +48,10 @@ var pdCellExtMask = function() {}
 var pdCellStart = function() {}
 var pdEndStart = function() {}
 var pdExtVariable = function() {}
+var pdExtNested = function(cell)
+{
+
+}
 
 pdCellExtMask.prototype.Match = function(char) {
     return this.value.nodeName == '*' || this.value.nodeName == char || (this.value.nodeName == ' ' && char == ' ');
@@ -130,6 +134,7 @@ pdCellExtensionObjects[pdVertexType.MASK] = pdCellExtMask;
 pdCellExtensionObjects[pdVertexType.START] = pdCellStart;
 pdCellExtensionObjects[pdVertexType.END] = pdEndStart;
 pdCellExtensionObjects[pdVertexType.VARIABLE] =pdExtVariable;
+pdCellExtensionObjects[pdVertexType.NESTED] = pdExtNested;
 
 var pdCloner = {
     clone: function() {
@@ -147,6 +152,7 @@ var pdFlow = {
         Object.assign(cell.value, pdCloner);
         var cellObj = pdCellExtensionObjects[style];
         if (cellObj != null) {
+            cellObj(cell);
             Object.assign(cell, cellObj.prototype);
             
         }
