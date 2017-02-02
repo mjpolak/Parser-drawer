@@ -5,7 +5,8 @@ var pdVertexType = {
     RECURSION: 'recursion',
     MASK: 'mask',
     VARIABLE: 'variable',
-    SPLITTER: 'splitter'
+    SPLITTER: 'splitter',
+    LAYER:'layer'
 }
 
 
@@ -29,14 +30,16 @@ var pdDataTargets = [
 var pdSourcesVertex = [
     pdVertexType.START,
     pdVertexType.MASK,
-    pdPortType.OUT
+    pdPortType.OUT,
+    pdVertexType.NESTED
 ];
 
 var pdTargetVertex = [
     pdVertexType.END,
     pdVertexType.MASK,
     pdVertexType.VARIABLE,
-    pdVertexType.SPLITTER
+    pdVertexType.SPLITTER,
+    pdVertexType.NESTED
 ]
 
 var pdContainersVertex = [
@@ -149,7 +152,8 @@ var pdFlow = {
             //alert('pdFlow.CustomizeCell style required')
             return;
         }
-        Object.assign(cell.value, pdCloner);
+        if(cell.value != null)
+            Object.assign(cell.value, pdCloner);
         var cellObj = pdCellExtensionObjects[style];
         if (cellObj != null) {
             cellObj(cell);

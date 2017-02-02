@@ -1,6 +1,11 @@
 var container = document.getElementById('graph_container');
 
+				var root = new mxCell();
+				var layer0 = root.insert(new mxCell());
+				var layer1 = root.insert(new mxCell()); 
+				var model = new mxGraphModel(root);
 var editor = new mxEditor();
+editor.graph = new mxGraph(container, model);
 var graph = editor.graph;
 var model = graph.getModel();
 editor.setGraphContainer(container);
@@ -92,10 +97,13 @@ mxRubberband.prototype.mouseUp = function(sender, me) {
 }
 
 mxGraph.prototype.isValidDropTarget = function(cell, cells, evt) {
-
-    return cell.pdType != null && pdContainersVertex.includes(cell.pdType) && !cells.some(function(x) {
+    if(cell.pdType == null)
+        return false;
+    if( (pdContainersVertex.includes(cell.pdType) && !cells.some(function(x) {
         return x.pdType == pdVertexType.START || x.pdType == pdVertexType.END
-    });
+    })  ) || cell.pdType == pdVertexType.LAYER ){
+        return true;
+    }
 }
 
 mxGraph.prototype.oldisValidConnection = mxGraph.prototype.isValidConnection;
@@ -111,11 +119,19 @@ mxGraph.prototype.isValidEnding = function(cell) {
 var previous = graph.model.getStyle;
 
 graph.model.getStyle = function(cell) {
-    if (cell != null && cell.source != null && cell.source.pdType == pdPortType.DATA) {
-        return pdEdgeType.VARIABLE;
-    } else {
-        return previous.apply(this, arguments)
+    var style = previous.apply(this, arguments) 
+    if (cell != null)
+    {
+        if( cell.source != null && cell.source.pdType == pdPortType.DATA)
+            return pdEdgeType.VARIABLE;
+
+        if (this.isCollapsed(cell))
+        {
+            style += ';'+mxConstants.STYLE_RESIZABLE+'=0;'+mxConstants.STYLE_LABEL_PADDING+'=100';
+        }
     }
+
+    return style;
 }
 
 mxGraph.prototype.isValidSource = function(cell) {
@@ -182,7 +198,7 @@ var edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
 edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.OrthConnector;
 edgeStyle[mxConstants.STYLE_ROUNDED] = true;
 //edgeStyle[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_DIAMOND;
-edgeStyle[mxConstants.STYLE_ENDSIZE] = 20;
+edgeStyle[mxConstants.STYLE_ENDSIZE] = 10;
 edgeStyle[mxConstants.STYLE_STROKECOLOR] = '#000';
 
 var dataEdgeStyle = angular.copy(edgeStyle);
@@ -388,8 +404,10 @@ NestedShape.prototype.paintVertexShape = function(c, x, y, w, h) {
     c.close();
 
     c.fillAndStroke();
-    c.setFillAlpha(0);
-    //c.setFillColor('#FFFFFF');
+
+    c.setShadow(true);
+    c.setFillAlpha(100);
+    c.setFillColor('#FFFFFF');
     c.begin();
     c.moveTo(0, dy);
     c.lineTo(w, dy);
@@ -404,12 +422,17 @@ mxCellRenderer.prototype.defaultShapes['shape_nested'] = NestedShape;
 nested[mxConstants.STYLE_SHAPE] = 'shape_nested';
 nested[mxConstants.STYLE_ROUNDED] = false;
 nested[mxConstants.STYLE_SHADOW] = false;
-nested[mxConstants.STYLE_FOLDABLE] = '0';
+nested[mxConstants.STYLE_FOLDABLE] = '1';
 nested[mxConstants.STYLE_FILLCOLOR] = 'lightgray';
 nested[mxConstants.STYLE_FILL_OPACITY] = 100;
 nested[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
 nested[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
 nested[mxConstants.STYLE_SPACING_TOP] = 2;
+nested[mxConstants.STYLE_SPACING_LEFT] = 10;
+nested[mxConstants.STYLE_SPACING_RIGHT] = 10;
+
+// nested[mxConstants.STYLE_RESIZABLE] = '0';
+// nested[mxConstants.STYLE_AUTOSIZE] = 1;
 
 graph.getStylesheet().putCellStyle(pdVertexType.NESTED, nested);
 mxConstraintHandler.prototype.intersects = function(icon, point, source, existingEdge) {
