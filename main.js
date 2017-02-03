@@ -1,5 +1,6 @@
-angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
-    .controller('BodyController', function($scope, ngDialog) {
+angular.module('todoApp', ['ngDialog','ngCookies','ui.bootstrap', 'ui.layout'])
+    .controller('BodyController', function($scope, ngDialog,$cookies) {
+
         $scope.xml = `
 <mxGraphModel>
   <root>
@@ -326,7 +327,9 @@ angular.module('todoApp', ['ngDialog', 'ui.bootstrap', 'ui.layout'])
 
             this.layers.sort( (x,y)=> x.id > y.id);
 
+            graph.fit();
             graph.refresh();
+            
         }
 
 

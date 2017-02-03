@@ -1,9 +1,9 @@
 var container = document.getElementById('graph_container');
 
-				var root = new mxCell();
-				var layer0 = root.insert(new mxCell());
-				var layer1 = root.insert(new mxCell()); 
-				var model = new mxGraphModel(root);
+var root = new mxCell();
+var layer0 = root.insert(new mxCell());
+var layer1 = root.insert(new mxCell());
+var model = new mxGraphModel(root);
 var editor = new mxEditor();
 editor.graph = new mxGraph(container, model);
 var graph = editor.graph;
@@ -23,14 +23,14 @@ graph.setAllowLoops(false);
 var ruberBand = new mxRubberband(graph);
 var paning = new mxPanningHandler(graph);
 
-graph.getModel().valueForCellChanged = function(cell, value) {
+graph.getModel().valueForCellChanged = function (cell, value) {
     var previous = cell.value.nodeName;
     cell.value.nodeName = value;
 
     return previous;
 };
 
-mxEvent.addMouseWheelListener(function(evt, up) {
+mxEvent.addMouseWheelListener(function (evt, up) {
     if (up) {
         graph.zoomIn();
     } else {
@@ -38,12 +38,12 @@ mxEvent.addMouseWheelListener(function(evt, up) {
     }
 });
 
-graph.getModel().addListener(mxEvent.CHANGE, function(sender, evt) {
-    var cells = evt.getProperty('edit').changes.map(function(x) {
+graph.getModel().addListener(mxEvent.CHANGE, function (sender, evt) {
+    var cells = evt.getProperty('edit').changes.map(function (x) {
         return x.cell
     });
 
-    var childs = cells.filter(function(x) {
+    var childs = cells.filter(function (x) {
         return x != null && x.isEdge != null
     })
     var distinct = pdArray.getDistinctBy(childs);
@@ -61,7 +61,7 @@ graph.getModel().addListener(mxEvent.CHANGE, function(sender, evt) {
     graph.getModel().endUpdate();
 });
 
-mxGraph.prototype.createGroupCell = function(cells) {
+mxGraph.prototype.createGroupCell = function (cells) {
     var group = new mxCell('', null, 'group'); //  + '=0');
     group.setVertex(true);
     group.setConnectable(false);
@@ -69,13 +69,13 @@ mxGraph.prototype.createGroupCell = function(cells) {
     return group;
 };
 
-mxGraph.prototype.convertValueToString = function(cell) {
+mxGraph.prototype.convertValueToString = function (cell) {
     var value = this.model.getValue(cell);
 
     if (value != null) {
         if (value.nodeName != null) {
             return value.nodeName;
-        } else if (typeof(value.toString) == 'function') {
+        } else if (typeof (value.toString) == 'function') {
             return value.toString();
         }
     }
@@ -87,21 +87,21 @@ mxGraph.prototype.convertValueToString = function(cell) {
 mxRubberband.prototype.oldMouseDown = mxRubberband.prototype.mouseDown;
 mxRubberband.prototype.oldMouseUp = mxRubberband.prototype.mouseUp;
 
-mxRubberband.prototype.mouseDown = function(sender, me) {
+mxRubberband.prototype.mouseDown = function (sender, me) {
     if (me.evt.which == 1)
         this.oldMouseDown(sender, me);
 }
-mxRubberband.prototype.mouseUp = function(sender, me) {
+mxRubberband.prototype.mouseUp = function (sender, me) {
     if (me.evt.which == 1)
         this.oldMouseUp(sender, me);
 }
 
-mxGraph.prototype.isValidDropTarget = function(cell, cells, evt) {
-    if(cell.pdType == null)
+mxGraph.prototype.isValidDropTarget = function (cell, cells, evt) {
+    if (cell.pdType == null)
         return false;
-    if( (pdContainersVertex.includes(cell.pdType) && !cells.some(function(x) {
-        return x.pdType == pdVertexType.START || x.pdType == pdVertexType.END
-    })  ) || cell.pdType == pdVertexType.LAYER ){
+    if ((pdContainersVertex.includes(cell.pdType) && !cells.some(function (x) {
+            return x.pdType == pdVertexType.START || x.pdType == pdVertexType.END
+        })) || cell.pdType == pdVertexType.LAYER) {
         return true;
     }
 }
@@ -109,7 +109,7 @@ mxGraph.prototype.isValidDropTarget = function(cell, cells, evt) {
 mxGraph.prototype.oldisValidConnection = mxGraph.prototype.isValidConnection;
 
 
-mxGraph.prototype.isValidEnding = function(cell) {
+mxGraph.prototype.isValidEnding = function (cell) {
     //console.log('isValidEnding');
     return (cell == null && this.allowDanglingEdges) ||
         (cell != null && (!this.model.isEdge(cell) ||
@@ -118,23 +118,21 @@ mxGraph.prototype.isValidEnding = function(cell) {
 
 var previous = graph.model.getStyle;
 
-graph.model.getStyle = function(cell) {
-    var style = previous.apply(this, arguments) 
-    if (cell != null)
-    {
-        if( cell.source != null && cell.source.pdType == pdPortType.DATA)
+graph.model.getStyle = function (cell) {
+    var style = previous.apply(this, arguments)
+    if (cell != null) {
+        if (cell.source != null && cell.source.pdType == pdPortType.DATA)
             return pdEdgeType.VARIABLE;
 
-        if (this.isCollapsed(cell))
-        {
-            style += ';'+mxConstants.STYLE_RESIZABLE+'=0;'+mxConstants.STYLE_LABEL_PADDING+'=100';
+        if (this.isCollapsed(cell)) {
+            style += ';' + mxConstants.STYLE_RESIZABLE + '=0;' + mxConstants.STYLE_LABEL_PADDING + '=100';
         }
     }
 
     return style;
 }
 
-mxGraph.prototype.isValidSource = function(cell) {
+mxGraph.prototype.isValidSource = function (cell) {
     if (cell != null && cell.pdType) {
         if (!pdSourcesVertex.includes(cell.pdType) && cell.pdType != pdPortType.DATA)
             return false;
@@ -145,12 +143,12 @@ mxGraph.prototype.isValidSource = function(cell) {
     return this.isValidEnding(cell);
 }
 
-mxGraph.prototype.isValidTarget = function(cell) {
+mxGraph.prototype.isValidTarget = function (cell) {
     if (cell == null || cell.pdType == null || !(pdTargetVertex.includes(cell.pdType) || pdDataTargets.includes(cell.pdType)))
         return false;
     return this.isValidEnding(cell);
 }
-mxGraph.prototype.isValidConnection = function(source, target) {
+mxGraph.prototype.isValidConnection = function (source, target) {
 
     // variable port to variables
     if (source != null && target != null) {
@@ -167,7 +165,7 @@ mxGraph.prototype.isValidConnection = function(source, target) {
     }
     return this.oldisValidConnection(source, target);
 }
-graph.validateEdge = function(edge, source, target) {
+graph.validateEdge = function (edge, source, target) {
 
     if (!pdSourcesVertex.includes(source.pdType) && !pdDataSources.includes(source.pdType))
         return 'Cannot be source';
@@ -272,7 +270,7 @@ function SplitterShape() {
 }
 mxUtils.extend(SplitterShape, mxCylinder);
 
-SplitterShape.prototype.paintVertexShape = function(c, x, y, w, h) {
+SplitterShape.prototype.paintVertexShape = function (c, x, y, w, h) {
     var dx = 10 // * this.scale;
     c.translate(x, y);
     c.setShadow(false);
@@ -295,7 +293,7 @@ SplitterShape.prototype.paintVertexShape = function(c, x, y, w, h) {
 
     var children = this.state.cell.children;
 
-    children.forEach(function(element) {
+    children.forEach(function (element) {
         var x = element.geometry.offset.x + element.geometry.width / 2;
         c.moveTo(x, 10);
         c.lineTo(x, 20);
@@ -389,9 +387,9 @@ function NestedShape() {
 }
 mxUtils.extend(NestedShape, mxCylinder);
 
-NestedShape.prototype.paintVertexShape = function(c, x, y, w, h) {
-    var dy = 20 * this.scale;
-    var dx = 20 * this.scale;
+NestedShape.prototype.paintVertexShape = function (c, x, y, w, h) {
+    var dy = 20; // * this.scale;
+    var dx = 20; // * this.scale;
     c.translate(x, y);
     c.setShadow(false);
     c.begin();
@@ -405,16 +403,18 @@ NestedShape.prototype.paintVertexShape = function(c, x, y, w, h) {
 
     c.fillAndStroke();
 
-    c.setShadow(true);
-    c.setFillAlpha(100);
-    c.setFillColor('#FFFFFF');
-    c.begin();
-    c.moveTo(0, dy);
-    c.lineTo(w, dy);
-    c.lineTo(w, h);
-    c.lineTo(0, h);
-    c.close();
-    c.fillAndStroke();
+    if (!this.state.cell.isCollapsed()) {
+        c.setShadow(true);
+        c.setFillAlpha(100);
+        c.setFillColor('#FFFFFF');
+        c.begin();
+        c.moveTo(0, dy);
+        c.lineTo(w, dy);
+        c.lineTo(w, h);
+        c.lineTo(0, h);
+        c.close();
+        c.fillAndStroke();
+    }
 }
 
 mxCellRenderer.prototype.defaultShapes['shape_nested'] = NestedShape;
@@ -435,10 +435,10 @@ nested[mxConstants.STYLE_SPACING_RIGHT] = 10;
 // nested[mxConstants.STYLE_AUTOSIZE] = 1;
 
 graph.getStylesheet().putCellStyle(pdVertexType.NESTED, nested);
-mxConstraintHandler.prototype.intersects = function(icon, point, source, existingEdge) {
+mxConstraintHandler.prototype.intersects = function (icon, point, source, existingEdge) {
     return (!source || existingEdge) || mxUtils.intersects(icon.bounds, point);
 };
-graph.getAllConnectionConstraints = function(terminal) {
+graph.getAllConnectionConstraints = function (terminal) {
     if (terminal.cell != null && terminal.cell.pdType != null && terminal.cell.pdType == pdVertexType.SPLITTER) {
         return [new mxConnectionConstraint(new mxPoint(0.5, 0))];
     }
@@ -446,7 +446,7 @@ graph.getAllConnectionConstraints = function(terminal) {
     return null;
 };
 
-graph.popupMenuHandler.factoryMethod = function(menu, cell, evt) {
+graph.popupMenuHandler.factoryMethod = function (menu, cell, evt) {
     if (cell != null) {
         if (cell.FillMenu != null)
             cell.FillMenu(menu);
