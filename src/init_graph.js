@@ -286,17 +286,21 @@ SplitterShape.prototype.paintVertexShape = function (c, x, y, w, h) {
     c.begin();
     c.setFillAlpha(0);
 
-    c.moveTo(2 * dx, 10);
-    c.lineTo(w - 2 * dx, 10);
+    var children = this.state.cell.children;
+
+    
+
+    c.moveTo(-children[0].geometry.offset.x, 10);
+    c.lineTo(w-children[0].geometry.offset.x, 10);
     c.moveTo(w / 2, 0);
     c.lineTo(w / 2, 10);
 
-    var children = this.state.cell.children;
+    
 
     children.forEach(function (element) {
-        var x = element.geometry.offset.x + element.geometry.width / 2;
+        var x = w*element.geometry.x - element.geometry.offset.x;;
         c.moveTo(x, 10);
-        c.lineTo(x, 20);
+        c.lineTo(x, h);
     }, this);
 
     c.fillAndStroke();
@@ -314,7 +318,7 @@ splitter[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
 splitter[mxConstants.STYLE_STROKECOLOR] = '#000000';
 splitter[mxConstants.STYLE_FOLDABLE] = '0';
 splitter[mxConstants.STYLE_FONTCOLOR] = '#000000';
-splitter[mxConstants.STYLE_RESIZABLE] = '0';
+splitter[mxConstants.STYLE_RESIZABLE] = '1';
 splitter[mxConstants.STYLE_FILL_OPACITY] = 100;
 splitter[mxConstants.STYLE_PORT_CONSTRAINT] = mxConstants.DIRECTION_NORTH;
 splitter[mxConstants.STYLE_PORT_CONSTRAINT_ROTATION] = 1;

@@ -84,23 +84,32 @@ pdCellExtSplitter.prototype.GetPossibleCells = function() {
         .filter(x => x != null && x.GetPossibleCells != null).reduce((t, x) => t.concat(x.GetPossibleCells()), []);
     return options;
 }
+pdCellExtSplitter.prototype.Mirror = false;
+pdCellExtSplitter.prototype.SetNodesPositions =function()
+{
+    var step = 1.0/(this.children.length-1);
+    this.children.forEach(function(element,idx) {
+        element.geometry.offset = new mxPoint(-5, -10);
+        element.geometry.x = this.Mirror ? 1-(idx*step) : idx*step;
+    }, this);
 
+    graph.refresh();
+}
 pdCellExtSplitter.prototype.AddNode =function()
 {
     var child_count = this.children == null ? 0 : this.children.length
-    this.geometry.width = 15+(child_count+1)*25;
     graph.refresh();
     var v11 = graph.insertVertex(this, null, ''+(child_count+1), 0, 1, 20, 20, pdPortType.OUT,true);
     pdFlow.CustomizeCell(v11,pdPortType.OUT);
-    v11.geometry.offset = new mxPoint(10+(25*(child_count)), -10);
-    graph.refresh();
+
+    this.SetNodesPositions();
 }
 
 pdCellExtSplitter.prototype.RemoveNode = function()
 {
     this.geometry.width-=25;
     graph.getModel().remove(this.children[this.children.length-1]);
-    graph.refresh();
+    this.SetNodesPositions();
 }
 
 pdCellExtSplitter.prototype.FillMenu = function(menu)

@@ -431,7 +431,7 @@ angular.module('todoApp', ['ngDialog','ngCookies','ui.bootstrap', 'ui.layout'])
         $scope.createNewMask = function() {
 
             var create = function() {
-                var vertex = graph.createVertex(parent, null, { nodeName: '*' }, 100, 20, 100, 50, pdVertexType.MASK);
+                var vertex = graph.createVertex(parent, null, { nodeName: '*' }, 100, 20, 40, 50, pdVertexType.MASK);
                 pdFlow.CustomizeCell(vertex, pdVertexType.MASK);
                 var v11 = graph.insertVertex(vertex, null, 'V', 1, 0, 20, 20, pdPortType.DATA);
                 pdFlow.CustomizeCell(v11, pdPortType.DATA)
