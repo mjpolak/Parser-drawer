@@ -290,15 +290,14 @@ SplitterShape.prototype.paintVertexShape = function (c, x, y, w, h) {
 
     
 
-    c.moveTo(-children[0].geometry.offset.x, 10);
-    c.lineTo(w-children[0].geometry.offset.x, 10);
+    c.moveTo(0, 10);
+    c.lineTo(w, 10);
     c.moveTo(w / 2, 0);
     c.lineTo(w / 2, 10);
-
     
 
     children.forEach(function (element) {
-        var x = w*element.geometry.x - element.geometry.offset.x;;
+        var x = w*element.geometry.x;// - element.geometry.offset.x;;
         c.moveTo(x, 10);
         c.lineTo(x, h);
     }, this);

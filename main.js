@@ -1,12 +1,10 @@
 angular.module('todoApp', ['ngDialog','ngCookies','ui.bootstrap', 'ui.layout'])
     .controller('BodyController', function($scope, ngDialog,$cookies) {
 
-        $scope.xml = `
-<mxGraphModel>
+        $scope.xml = `<mxGraphModel>
   <root>
     <mxCell id="0"/>
     <mxCell id="1" parent="0" pdType="layer"/>
-	<mxCell id="2" parent="0" pdType="layer"/>
     <mxCell id="3" value="start" style="start" parent="1" vertex="1" pdType="start">
       <mxGeometry x="-516" y="-316" width="35" height="35" as="geometry"/>
     </mxCell>
@@ -17,18 +15,18 @@ angular.module('todoApp', ['ngDialog','ngCookies','ui.bootstrap', 'ui.layout'])
       <Object nodeName="tag" as="value"/>
       <mxGeometry x="-291" y="-10" width="50" height="50" as="geometry"/>
     </mxCell>
-    <mxCell id="75" style="splitter" parent="1" vertex="1" pdType="splitter">
+    <mxCell id="75" style="splitter" parent="1" vertex="1" pdType="splitter" Mirror="0">
       <Object nodeName="" as="value"/>
-      <mxGeometry x="-423" y="-244" width="65" height="30" as="geometry"/>
+      <mxGeometry x="-420" y="-244" width="62" height="30" as="geometry"/>
     </mxCell>
     <mxCell id="72" value="1" style="out_port" parent="75" vertex="1" pdType="out_port">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="10" y="-10" as="offset"/>
+        <mxPoint x="-10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
     <mxCell id="73" value="2" style="out_port" parent="75" vertex="1" pdType="out_port">
-      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="35" y="-10" as="offset"/>
+      <mxGeometry x="1" y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
     <mxCell id="76" value="" parent="1" source="72" target="60" edge="1">
@@ -48,7 +46,7 @@ angular.module('todoApp', ['ngDialog','ngCookies','ui.bootstrap', 'ui.layout'])
     </mxCell>
     <mxCell id="79" style="nested" parent="1" vertex="1" pdType="nested">
       <Object nodeName="argumenty" as="value"/>
-      <mxGeometry x="-521" y="98" width="651" height="362" as="geometry"/>
+      <mxGeometry x="-520" y="94" width="651" height="362" as="geometry"/>
     </mxCell>
     <mxCell id="82" style="mask" parent="79" vertex="1" pdType="mask">
       <Object nodeName="*" as="value"/>
@@ -102,18 +100,18 @@ angular.module('todoApp', ['ngDialog','ngCookies','ui.bootstrap', 'ui.layout'])
     <mxCell id="94" value="" parent="79" source="90" target="93" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="100" style="splitter" parent="79" vertex="1" pdType="splitter">
+    <mxCell id="100" style="splitter" parent="79" vertex="1" pdType="splitter" Mirror="0">
       <Object nodeName="" as="value"/>
-      <mxGeometry x="411" y="224" width="65" height="30" as="geometry"/>
+      <mxGeometry x="411" y="224" width="94" height="30" as="geometry"/>
     </mxCell>
     <mxCell id="97" value="1" style="out_port" parent="100" vertex="1" pdType="out_port">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="10" y="-10" as="offset"/>
+        <mxPoint x="-10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
     <mxCell id="98" value="2" style="out_port" parent="100" vertex="1" pdType="out_port">
-      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="35" y="-10" as="offset"/>
+      <mxGeometry x="1" y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
     <mxCell id="101" value="" style="entryX=0.5;entryY=0;" parent="79" source="93" target="100" edge="1" pdType="entryX=0.5">
@@ -131,18 +129,18 @@ angular.module('todoApp', ['ngDialog','ngCookies','ui.bootstrap', 'ui.layout'])
     <mxCell id="106" value="" parent="79" source="98" target="105" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="118" style="splitter" parent="79" vertex="1" pdType="splitter">
+    <mxCell id="118" style="splitter" parent="79" vertex="1" pdType="splitter" Mirror="0">
       <Object nodeName="" as="value"/>
       <mxGeometry x="125" y="303" width="65" height="30" as="geometry"/>
     </mxCell>
     <mxCell id="115" value="1" style="out_port" parent="118" vertex="1" pdType="out_port">
       <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="10" y="-10" as="offset"/>
+        <mxPoint x="-10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
     <mxCell id="116" value="2" style="out_port" parent="118" vertex="1" pdType="out_port">
-      <mxGeometry y="1" width="20" height="20" relative="1" as="geometry">
-        <mxPoint x="35" y="-10" as="offset"/>
+      <mxGeometry x="1" y="1" width="20" height="20" relative="1" as="geometry">
+        <mxPoint x="-10" y="-10" as="offset"/>
       </mxGeometry>
     </mxCell>
     <mxCell id="119" value="" style="entryX=0.5;entryY=0;" parent="79" source="105" target="118" edge="1" pdType="entryX=0.5">
@@ -236,6 +234,7 @@ angular.module('todoApp', ['ngDialog','ngCookies','ui.bootstrap', 'ui.layout'])
     <mxCell id="121" value="" parent="1" source="116" target="96" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
+    <mxCell id="2" parent="0" pdType="layer"/>
   </root>
 </mxGraphModel>
 

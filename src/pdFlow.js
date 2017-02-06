@@ -89,7 +89,7 @@ pdCellExtSplitter.prototype.SetNodesPositions =function()
 {
     var step = 1.0/(this.children.length-1);
     this.children.forEach(function(element,idx) {
-        element.geometry.offset = new mxPoint(-5, -10);
+        element.geometry.offset = new mxPoint(-10, -10);
         element.geometry.x = this.Mirror ? 1-(idx*step) : idx*step;
     }, this);
 
@@ -125,6 +125,12 @@ pdCellExtSplitter.prototype.FillMenu = function(menu)
         cell.RemoveNode();
         });
     }
+
+    menu.addItem('Flip', null, function(){
+            cell.Mirror =!cell.Mirror ;
+            cell.SetNodesPositions();
+            graph.refresh();
+        });
 }
 
 
