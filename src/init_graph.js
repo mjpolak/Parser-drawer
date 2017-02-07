@@ -23,6 +23,13 @@ graph.setAllowLoops(false);
 var ruberBand = new mxRubberband(graph);
 var paning = new mxPanningHandler(graph);
 
+var oldMouseDownPanning = paning.mouseDown;
+paning.mouseDown = function(sender,me)
+{
+    if( me.evt != null && me.evt.button != null && me.evt.button== 2)
+        oldMouseDownPanning.apply(this,arguments);
+}
+
 graph.getModel().valueForCellChanged = function (cell, value) {
     var previous = cell.value.nodeName;
     cell.value.nodeName = value;
