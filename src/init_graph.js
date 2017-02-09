@@ -23,6 +23,15 @@ graph.setAllowLoops(false);
 var ruberBand = new mxRubberband(graph);
 var paning = new mxPanningHandler(graph);
 
+
+// disable right mouse cell movement
+var oldMouseDownGraphHandler = mxGraphHandler.prototype.mouseDown;
+mxGraphHandler.prototype.mouseDown = function(sender,me)
+{
+    if(me.evt == null || me.evt.button==null || me.evt.button != 2)
+    oldMouseDownGraphHandler.apply(this,arguments);
+}
+
 var oldMouseDownPanning = paning.mouseDown;
 paning.mouseDown = function(sender,me)
 {
